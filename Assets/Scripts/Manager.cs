@@ -29,6 +29,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	private Vector3 _mouseOutPos;
 
 	private Vector3 _remainScale;
+	private Vector3 _currentScale = new Vector3(3,3,0.01f);
 
 	[SerializeField]
 	private GameObject _camera = null;
@@ -81,11 +82,14 @@ public class Manager : MonoBehaviour, IGameObject {
 
 				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos);
 
-				if (_distanceX > 1 && ) { // summoning cubes with minimum limit with 
+				if (_distanceX > 1) { // summoning cubes with minimum limit with 
 					_mouseCanceled = false;
 
-					_sampleCube.transform.position = new Vector3 ((_mouseInPos.x + _mouseOutPos.x) / 2, (_mouseInPos.y + _mouseOutPos.y) / 2, 0);
-					_sampleCube.transform.localScale = new Vector3 (_distanceX, 0.1f, 1.0f);
+					Debug.Log (_currentScale.x);
+					if (_currentScale.x > 0.03f) {
+						_sampleCube.transform.position = new Vector3 ((_mouseInPos.x + _mouseOutPos.x) / 2, (_mouseInPos.y + _mouseOutPos.y) / 2, 0);
+						_sampleCube.transform.localScale = new Vector3 (_distanceX, 0.1f, 1.0f);
+					}
 
 					//End Pos - Start Pos = Vec1
 					var relativePos = _mouseOutPos - _mouseInPos;
@@ -99,20 +103,16 @@ public class Manager : MonoBehaviour, IGameObject {
 					Vector3 usedEnergyScale = new Vector3 (_distanceX, _distanceX, 0);
 
 					if (_resourceCircle.transform.localScale.x > usedEnergyScale.x * 0.01f) {
-						Vector3 currentScale = _resourceCircle.transform.localScale;
-						currentScale = _remainScale - usedEnergyScale * 0.1f;
-						_resourceCircle.transform.localScale = currentScale;
+						_currentScale = _resourceCircle.transform.localScale;
+						_currentScale = _remainScale - usedEnergyScale * 0.1f;
+						_resourceCircle.transform.localScale = _currentScale;
 					} else
 						_resourceCircle.transform.localScale = new Vector3 (0f, 0f, 0.01f);
 					
 				} else { 
 					_mouseCanceled = true;
 					_sampleCube.transform.position = new Vector3 (0, 0, -20);
-
-
 				}
-
-
 			}
 
 			if (Input.GetMouseButtonUp (0)) {
