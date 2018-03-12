@@ -55,6 +55,9 @@ public class Manager : MonoBehaviour, IGameObject {
 		_sphere.SphereResume ();
 		_mouseClicked = _mouseCanceled = false;
 		_mouseInPos = _mouseOutPos = new Vector3 (0, 0, 0);
+		_cubes [1].transform.position = new Vector3 (0, 0, -20);
+		_cubes [0].transform.position = new Vector3 (0, 0, -20);
+		_resourceCircle.transform.localScale = new Vector3 (3, 3, 0.1f);
 		_bplay = true;
 
 	}
@@ -66,7 +69,7 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	public void GameUpdate()
 	{
-		if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10)
+		if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y + 20 < _camera.transform.position.y )
 			GameStop ();
 
 
@@ -78,18 +81,19 @@ public class Manager : MonoBehaviour, IGameObject {
 				_mouseClicked = true;
 				_remainScale = _resourceCircle.transform.localScale;
 			}
-			Debug.Log ("distance :" + _distanceX + " " +"currentScale " + _currentScale + " " + "remainScale :" + _remainScale + "_mouseClicked: " + _mouseClicked + " " + "_mouseCanceled: " + _mouseCanceled);
+
 			if (_mouseClicked) {
 				_mouseOutPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
-				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos);
+				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos) * 2;
 
 				if (_distanceX > 1) { // summoning cubes with minimum limit with 
 					_mouseCanceled = false;
 
 
 					if (_currentScale.x > 0.03f) {
-						_sampleCube.transform.position = new Vector3 ((_mouseInPos.x + _mouseOutPos.x) / 2, (_mouseInPos.y + _mouseOutPos.y) / 2, 0);
+						//_sampleCube.transform.position = new Vector3 ((_mouseInPos.x + _mouseOutPos.x) / 2, (_mouseInPos.y + _mouseOutPos.y) / 2, 0);
+						_sampleCube.transform.position = new Vector3 (_mouseInPos.x, _mouseInPos.y, 0);
 						_sampleCube.transform.localScale = new Vector3 (_distanceX, 0.1f, 1.0f);
 					}
 
@@ -104,9 +108,9 @@ public class Manager : MonoBehaviour, IGameObject {
 					// when player is dragging, the part of making resourceCircle
 					Vector3 usedEnergyScale = new Vector3 (_distanceX, _distanceX, 0);
 
-					if (_remainScale.x > usedEnergyScale.x * 0.05f) {
+					if (_remainScale.x > usedEnergyScale.x * 0.1f) {
 						_currentScale = _resourceCircle.transform.localScale;
-						_currentScale = _remainScale - usedEnergyScale * 0.05f;
+						_currentScale = _remainScale - usedEnergyScale * 0.1f;
 						_resourceCircle.transform.localScale = _currentScale;
 					} else
 						_currentScale = _resourceCircle.transform.localScale = new Vector3 (0f, 0f, 0.01f);

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/BounceHigh/Temp/gradleOut/libs/unity-classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="2d302418aa3482b8db770278260340aed47dd37a">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/unity-classes_88a46e613815f7a1c3be726a12ff03758857e97d.jar" />
+    </item>
+
+</items>
