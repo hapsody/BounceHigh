@@ -53,6 +53,8 @@ public class Manager : MonoBehaviour, IGameObject {
 		_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, 1, -10), Time.deltaTime * 3);
 		_sphere.transform.position = new Vector3 (0, 0, 0);
 		_sphere.SphereResume ();
+		_mouseClicked = _mouseCanceled = false;
+		_mouseInPos = _mouseOutPos = new Vector3 (0, 0, 0);
 		_bplay = true;
 
 	}
@@ -76,7 +78,7 @@ public class Manager : MonoBehaviour, IGameObject {
 				_mouseClicked = true;
 				_remainScale = _resourceCircle.transform.localScale;
 			}
-
+			Debug.Log ("distance :" + _distanceX + " " +"currentScale " + _currentScale + " " + "remainScale :" + _remainScale + "_mouseClicked: " + _mouseClicked + " " + "_mouseCanceled: " + _mouseCanceled);
 			if (_mouseClicked) {
 				_mouseOutPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 
@@ -85,7 +87,7 @@ public class Manager : MonoBehaviour, IGameObject {
 				if (_distanceX > 1) { // summoning cubes with minimum limit with 
 					_mouseCanceled = false;
 
-					Debug.Log (_currentScale.x);
+
 					if (_currentScale.x > 0.03f) {
 						_sampleCube.transform.position = new Vector3 ((_mouseInPos.x + _mouseOutPos.x) / 2, (_mouseInPos.y + _mouseOutPos.y) / 2, 0);
 						_sampleCube.transform.localScale = new Vector3 (_distanceX, 0.1f, 1.0f);
@@ -102,16 +104,18 @@ public class Manager : MonoBehaviour, IGameObject {
 					// when player is dragging, the part of making resourceCircle
 					Vector3 usedEnergyScale = new Vector3 (_distanceX, _distanceX, 0);
 
-					if (_resourceCircle.transform.localScale.x > usedEnergyScale.x * 0.01f) {
+					if (_remainScale.x > usedEnergyScale.x * 0.05f) {
 						_currentScale = _resourceCircle.transform.localScale;
-						_currentScale = _remainScale - usedEnergyScale * 0.1f;
+						_currentScale = _remainScale - usedEnergyScale * 0.05f;
 						_resourceCircle.transform.localScale = _currentScale;
 					} else
-						_resourceCircle.transform.localScale = new Vector3 (0f, 0f, 0.01f);
+						_currentScale = _resourceCircle.transform.localScale = new Vector3 (0f, 0f, 0.01f);
+
 					
 				} else { 
 					_mouseCanceled = true;
 					_sampleCube.transform.position = new Vector3 (0, 0, -20);
+					_resourceCircle.transform.localScale = _remainScale;
 				}
 			}
 
@@ -133,7 +137,7 @@ public class Manager : MonoBehaviour, IGameObject {
 					_mouseCanceled = false;
 				} else
 					_mouseCanceled = true;
-				
+					
 				_sampleCube.transform.position = new Vector3 (0, 0, -20);
 				_mouseClicked = false;
 
@@ -150,7 +154,7 @@ public class Manager : MonoBehaviour, IGameObject {
 
 
 				if (prevScale.x < 3) {
-					prevScale = prevScale + new Vector3 (0.1f, 0.1f, 0f) * Time.deltaTime; 
+					prevScale = prevScale + new Vector3 (0.5f, 0.5f, 0f) * Time.deltaTime; 
 					_resourceCircle.transform.localScale = prevScale;
 				}
 			}
