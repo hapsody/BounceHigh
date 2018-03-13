@@ -20,6 +20,7 @@ public class Sphere : MonoBehaviour {
 
 	void OnCollisionEnter(Collision target){
 		_rigidbody.AddForce (target.transform.up * 1000);
+
 	}
 }
-	
+		

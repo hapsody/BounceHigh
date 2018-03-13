@@ -63,6 +63,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_cubes [1].transform.position = new Vector3 (0, 0, -20);
 		_cubes [0].transform.position = new Vector3 (0, 0, -20);
 		_resourceCircle.transform.localScale = new Vector3 (3, 3, 0.1f);
+
 		_bplay = true;
 
 	}
@@ -77,8 +78,8 @@ public class Manager : MonoBehaviour, IGameObject {
 	public void GameUpdate()
 	{
 
-		if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y < _lastCameraPositionY - 20) 
-			GameStop ();
+		//if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y < _lastCameraPositionY - 20) 
+		//	GameStop ();
 		
 		if (_bplay) {
 			
@@ -118,9 +119,10 @@ public class Manager : MonoBehaviour, IGameObject {
 						_currentScale = _resourceCircle.transform.localScale;
 						_currentScale = _remainScale - usedEnergyScale * 0.6f;
 						_resourceCircle.transform.localScale = _currentScale;
+
 					} else {
 						_currentScale = _resourceCircle.transform.localScale = new Vector3 (0f, 0f, 0.01f);
-						_runOutEnergy = true;
+
 					}
 
 					
@@ -141,11 +143,12 @@ public class Manager : MonoBehaviour, IGameObject {
 					_cubes [turn].transform.position = _sampleCube.transform.position;
 					_cubes [turn].transform.localScale = _sampleCube.transform.localScale;
 					_cubes [turn].transform.rotation = _sampleCube.transform.rotation;
-
+					/*
 					if (turn == 0)
 						turn = 1;
 					else
 						turn = 0;
+						*/
 
 					_mouseCanceled = false;
 				} else {
@@ -163,12 +166,12 @@ public class Manager : MonoBehaviour, IGameObject {
 				_mouseOutPos.z = -10;
 				_lastCameraPositionY = _mouseOutPos.y + 1;
 
-				if (!_runOutEnergy) {
-					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY, -10), Time.deltaTime * 3);
-					var cameraPosition = _camera.transform.position;
-					_bgResourceCircle.transform.position = _resourceCircle.transform.position = new Vector3 (cameraPosition.x + 6, cameraPosition.y - 12, -3);
-					_runOutEnergy = false;
-				}
+
+				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY, -10), Time.deltaTime * 3);
+				var cameraPosition = _camera.transform.position;
+				_bgResourceCircle.transform.position = _resourceCircle.transform.position = new Vector3 (cameraPosition.x + 6, cameraPosition.y - 12, -3);
+			
+
 
 				Vector3 prevScale = _resourceCircle.transform.localScale;
 
