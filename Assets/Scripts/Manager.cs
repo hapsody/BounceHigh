@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ public class Manager : MonoBehaviour, IGameObject {
 	static private Manager _instance;
 
 	static public Manager Instance { get { return _instance; } set { _instance = value;} }
+	[SerializeField]
+	private GameObject[] _heightNumbers = new GameObject[3];
+	private int _height = 0;
+	private int _bestHeight =0;
 
 	private bool _bplay = true;
 	public bool BPLAY { get { return _bplay; } set { _bplay = value; } }
@@ -28,20 +33,13 @@ public class Manager : MonoBehaviour, IGameObject {
 	private Vector3 _mouseInPos;
 	private Vector3 _mouseOutPos;
 
-	private Vector3 _remainScale;
-	private Vector3 _currentScale = new Vector3(3,3,0.01f);
-
 	[SerializeField]
 	private GameObject _camera = null;
-	[SerializeField]
-	private GameObject _resourceCircle = null;
 
 	private bool _mouseClicked = false;
-	private bool _mouseCanceled = false;
 	private float _distanceX;
-	private bool _initCameraMoving = false;
 	private float _lastCameraPositionY;
-	private bool _runOutEnergy = false;
+
 
 	void Awake() {
 		_instance = this;
@@ -56,19 +54,15 @@ public class Manager : MonoBehaviour, IGameObject {
 		
 		_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, -5, -10), Time.deltaTime * 3);
 		_lastCameraPositionY = 0f;
+
 		_sphere.transform.position = new Vector3 (0, 0, 0);
 		_sphere.SphereResume ();
-		_mouseClicked = _mouseCanceled = false;
+		_mouseClicked = false;
 		_mouseInPos = _mouseOutPos = new Vector3 (0, 0, 0);
-		_cubes [1].transform.position = new Vector3 (0, 0, -20);
-		_cubes [0].transform.position = new Vector3 (0, 0, -20);
-		_resourceCircle.transform.localScale = new Vector3 (3, 3, 0.1f);
-
+		_sampleCube.transform.position = _cubes [0].transform.position = new Vector3 (0, 0, -20);
 		_bplay = true;
 
 	}
-
-
 
 	void GameStop(){
 		_bplay = false;
@@ -78,59 +72,29 @@ public class Manager : MonoBehaviour, IGameObject {
 	public void GameUpdate()
 	{
 
-		//if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y < _lastCameraPositionY - 20) 
-		//	GameStop ();
-		
+		if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y < _lastCameraPositionY - 20) 
+			GameStop ();
+
+		_height = (int) (_sphere.transform.position.y + 8.2f);
+		/*
+		_heightNumbers[0].GetComponent<TextMesh>().text =  (_height).ToString() + "m";
+		var spherePosition =  _sphere.transform.position;
+
+		_heightNumbers [0].transform.position = new Vector3(spherePosition.x-1.5f, spherePosition.y+3, -1);
+*/
+		var spherePosition =  _sphere.transform.position;
+		_heightNumbers [1].transform.position = new Vector3(spherePosition.x, spherePosition.y+2, -1);
+		//_heightNumbers [1].transform.position = new Vector3 (_camera.transform.position.x, _camera.transform.position.y  - 8, -1);
+		if (_height > _bestHeight) {
+			_heightNumbers [1].GetComponent<TextMesh> ().text = (_height).ToString () + "m";
+			_bestHeight = _height;
+		}
+
 		if (_bplay) {
 			
 			if (Input.GetMouseButtonDown (0)) {
 				_mouseInPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				_mouseClicked = true;
-				_remainScale = _resourceCircle.transform.localScale;
-			}
-
-			if (_mouseClicked) {
-				_mouseOutPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-
-				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos) * 2;
-
-				if (_distanceX > 0.6f) { // summoning cubes with minimum limit with 
-					_mouseCanceled = false;
-
-
-					if (_currentScale.x > 0.03f) {
-						//_sampleCube.transform.position = new Vector3 ((_mouseInPos.x + _mouseOutPos.x) / 2, (_mouseInPos.y + _mouseOutPos.y) / 2, 0);
-						_sampleCube.transform.position = new Vector3 (_mouseInPos.x, _mouseInPos.y, 0);
-						_sampleCube.transform.localScale = new Vector3 (_distanceX, 0.1f, 1.0f);
-					}
-
-					//End Pos - Start Pos = Vec1
-					var relativePos = _mouseOutPos - _mouseInPos;
-
-					Vector3 vec3AxisX = new Vector3 (1.0f, 0.0f, 0.0f);
-					Quaternion quaternion = Quaternion.FromToRotation (vec3AxisX, relativePos);
-					_sampleCube.transform.rotation = quaternion;
-
-
-					// when player is dragging, the part of making resourceCircle
-					Vector3 usedEnergyScale = new Vector3 (_distanceX, _distanceX, 0);
-
-					if (_remainScale.x > usedEnergyScale.x * 0.6f) {
-						_currentScale = _resourceCircle.transform.localScale;
-						_currentScale = _remainScale - usedEnergyScale * 0.6f;
-						_resourceCircle.transform.localScale = _currentScale;
-
-					} else {
-						_currentScale = _resourceCircle.transform.localScale = new Vector3 (0f, 0f, 0.01f);
-
-					}
-
-					
-				} else { 
-					_mouseCanceled = true;
-					_sampleCube.transform.position = new Vector3 (0, 0, -20);
-					_resourceCircle.transform.localScale = _remainScale;
-				}
 			}
 
 			if (Input.GetMouseButtonUp (0)) {
@@ -138,48 +102,36 @@ public class Manager : MonoBehaviour, IGameObject {
 				_mouseOutPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos);
 
+				_cubes [turn].transform.position = _sampleCube.transform.position;
+				_cubes [turn].transform.localScale = _sampleCube.transform.localScale;
+				_cubes [turn].transform.rotation = _sampleCube.transform.rotation;
 
-				if (_distanceX > 0.6f) {
-					_cubes [turn].transform.position = _sampleCube.transform.position;
-					_cubes [turn].transform.localScale = _sampleCube.transform.localScale;
-					_cubes [turn].transform.rotation = _sampleCube.transform.rotation;
-					/*
-					if (turn == 0)
-						turn = 1;
-					else
-						turn = 0;
-						*/
-
-					_mouseCanceled = false;
-				} else {
-					_mouseOutPos = new Vector3 (0, 0, 0);
-					_mouseCanceled = true;
-				}
 				_sampleCube.transform.position = new Vector3 (0, 0, -20);
 				_mouseClicked = false;
 
 			}
 
+			if (_mouseClicked) {
+				_mouseOutPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos) * 2;
+				float cubeLengthLimit = 7;
+				if (_distanceX < cubeLengthLimit) {
+					_sampleCube.transform.position = new Vector3 (_mouseInPos.x, _mouseInPos.y, 0);
+					_sampleCube.transform.localScale = new Vector3 (_distanceX, 0.1f, 1.0f);
+				} else {
+					_sampleCube.transform.localScale = new Vector3 (cubeLengthLimit, 0.1f, 1.0f);
+				}
 
+				var relativePos = _mouseOutPos - _mouseInPos;
 
-			if (!_mouseClicked && !_mouseCanceled) {
+				Vector3 vec3AxisX = new Vector3 (1.0f, 0.0f, 0.0f);
+				Quaternion quaternion = Quaternion.FromToRotation (vec3AxisX, relativePos);
+				_sampleCube.transform.rotation = quaternion;
+
+			} else {
 				_mouseOutPos.z = -10;
 				_lastCameraPositionY = _mouseOutPos.y + 1;
-
-
 				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY, -10), Time.deltaTime * 3);
-				var cameraPosition = _camera.transform.position;
-				_bgResourceCircle.transform.position = _resourceCircle.transform.position = new Vector3 (cameraPosition.x + 6, cameraPosition.y - 12, -3);
-			
-
-
-				Vector3 prevScale = _resourceCircle.transform.localScale;
-
-
-				if (prevScale.x < 3) {
-					prevScale = prevScale + new Vector3 (3.5f, 3.5f, 0f) * Time.deltaTime; 
-					_resourceCircle.transform.localScale = prevScale;
-				}
 			}
 		} else {
 			if (Input.GetMouseButtonUp (0)) {
