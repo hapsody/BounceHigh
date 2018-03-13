@@ -39,6 +39,9 @@ public class Manager : MonoBehaviour, IGameObject {
 	private bool _mouseClicked = false;
 	private bool _mouseCanceled = false;
 	private float _distanceX;
+	private bool _initCameraMoving = false;
+	private float _lastCameraPositionY;
+	private bool _runOutEnergy = false;
 
 	void Awake() {
 		_instance = this;
@@ -50,7 +53,9 @@ public class Manager : MonoBehaviour, IGameObject {
 	}
 	void GameInit()
 	{
-		_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, 1, -10), Time.deltaTime * 3);
+		
+		_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, -5, -10), Time.deltaTime * 3);
+		_lastCameraPositionY = 0f;
 		_sphere.transform.position = new Vector3 (0, 0, 0);
 		_sphere.SphereResume ();
 		_mouseClicked = _mouseCanceled = false;
@@ -62,6 +67,8 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	}
 
+
+
 	void GameStop(){
 		_bplay = false;
 		_sphere.SphereFreeze ();
@@ -69,10 +76,9 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	public void GameUpdate()
 	{
-		if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y + 20 < _camera.transform.position.y )
+
+		if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y < _lastCameraPositionY - 20) 
 			GameStop ();
-
-
 		
 		if (_bplay) {
 			
@@ -87,7 +93,7 @@ public class Manager : MonoBehaviour, IGameObject {
 
 				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos) * 2;
 
-				if (_distanceX > 1) { // summoning cubes with minimum limit with 
+				if (_distanceX > 0.6f) { // summoning cubes with minimum limit with 
 					_mouseCanceled = false;
 
 
@@ -108,12 +114,14 @@ public class Manager : MonoBehaviour, IGameObject {
 					// when player is dragging, the part of making resourceCircle
 					Vector3 usedEnergyScale = new Vector3 (_distanceX, _distanceX, 0);
 
-					if (_remainScale.x > usedEnergyScale.x * 0.1f) {
+					if (_remainScale.x > usedEnergyScale.x * 0.6f) {
 						_currentScale = _resourceCircle.transform.localScale;
-						_currentScale = _remainScale - usedEnergyScale * 0.1f;
+						_currentScale = _remainScale - usedEnergyScale * 0.6f;
 						_resourceCircle.transform.localScale = _currentScale;
-					} else
+					} else {
 						_currentScale = _resourceCircle.transform.localScale = new Vector3 (0f, 0f, 0.01f);
+						_runOutEnergy = true;
+					}
 
 					
 				} else { 
@@ -128,7 +136,8 @@ public class Manager : MonoBehaviour, IGameObject {
 				_mouseOutPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos);
 
-				if (_distanceX > 1) {
+
+				if (_distanceX > 0.6f) {
 					_cubes [turn].transform.position = _sampleCube.transform.position;
 					_cubes [turn].transform.localScale = _sampleCube.transform.localScale;
 					_cubes [turn].transform.rotation = _sampleCube.transform.rotation;
@@ -139,31 +148,38 @@ public class Manager : MonoBehaviour, IGameObject {
 						turn = 0;
 
 					_mouseCanceled = false;
-				} else
+				} else {
+					_mouseOutPos = new Vector3 (0, 0, 0);
 					_mouseCanceled = true;
-					
+				}
 				_sampleCube.transform.position = new Vector3 (0, 0, -20);
 				_mouseClicked = false;
 
 			}
 
+
+
 			if (!_mouseClicked && !_mouseCanceled) {
 				_mouseOutPos.z = -10;
-				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _mouseOutPos.y + 1, -10), Time.deltaTime * 3);
-				var cameraPosition = _camera.transform.position;
-				_bgResourceCircle.transform.position = _resourceCircle.transform.position = new Vector3 (cameraPosition.x + 6, cameraPosition.y - 12, -3);
+				_lastCameraPositionY = _mouseOutPos.y + 1;
 
+				if (!_runOutEnergy) {
+					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY, -10), Time.deltaTime * 3);
+					var cameraPosition = _camera.transform.position;
+					_bgResourceCircle.transform.position = _resourceCircle.transform.position = new Vector3 (cameraPosition.x + 6, cameraPosition.y - 12, -3);
+					_runOutEnergy = false;
+				}
 
 				Vector3 prevScale = _resourceCircle.transform.localScale;
 
 
 				if (prevScale.x < 3) {
-					prevScale = prevScale + new Vector3 (0.5f, 0.5f, 0f) * Time.deltaTime; 
+					prevScale = prevScale + new Vector3 (3.5f, 3.5f, 0f) * Time.deltaTime; 
 					_resourceCircle.transform.localScale = prevScale;
 				}
 			}
 		} else {
-			if (Input.GetMouseButtonDown (0)) {
+			if (Input.GetMouseButtonUp (0)) {
 				GameInit ();
 			}
 		}
