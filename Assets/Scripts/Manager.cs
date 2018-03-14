@@ -41,7 +41,10 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	[SerializeField]
 	private Text _bestScore;
-
+	[SerializeField]
+	private Transform _panel;
+	private float _panelAlpha = 0f;
+	private bool _alphaIncrease = true;
 	void Awake() {
 		_instance = this;
 	}
@@ -50,18 +53,48 @@ public class Manager : MonoBehaviour, IGameObject {
 	void Start () {
 		GameInit ();
 	}
+
+	IEnumerator PanelFadeIn()
+	{
+		while (true) {
+			
+		if (_alphaIncrease){
+			if (_panelAlpha < 1)
+				_panelAlpha += Time.deltaTime * 2;
+			else {
+				_panelAlpha = 1f;
+				_alphaIncrease = false;
+			}
+		} 
+		else {
+			if (_panelAlpha > 0.5)
+				_panelAlpha -= Time.deltaTime; 
+			else {
+				_panelAlpha = 0f;
+				_alphaIncrease = true;
+				break;
+			}
+		}
+		
+
+			Debug.Log (_panelAlpha);
+			Color color = new Color (1, 1, 1, _panelAlpha);
+			_panel.gameObject.GetComponent<Image> ().color = color;
+			yield return new WaitForSeconds (0.01f);
+		}
+	}
+
 	void GameInit()
 	{
 		
 		_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, -5, -10), Time.deltaTime * 3);
 		_lastCameraPositionY = 0f;
-
 		_sphere.transform.position = new Vector3 (0, 0, 0);
-		_sphere.SphereResume ();
 		_mouseClicked = false;
 		_mouseInPos = _mouseOutPos = new Vector3 (0, 0, 0);
 		_sampleCube.transform.position = _cubes [0].transform.position = new Vector3 (0, 0, -20);
-		_bplay = true;
+		_bestHeight = 0;
+		_bestScore.text = "0m";
 
 	}
 
@@ -70,30 +103,27 @@ public class Manager : MonoBehaviour, IGameObject {
 		_sphere.SphereFreeze ();
 	}
 
+
 	public void GameUpdate()
 	{
 
-		if (_sphere.transform.position.x < -11.73 || _sphere.transform.position.x > 11.73 || _sphere.transform.position.y < _lastCameraPositionY - 25) 
+		if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _lastCameraPositionY - 25) {
+			_panel.gameObject.SetActive (true);
+			GameInit ();
+			StartCoroutine ("PanelFadeIn");
 			GameStop ();
-
-		_height = (int) (_sphere.transform.position.y + 8.2f);
-		/*
-		var spherePosition =  _sphere.transform.position;
-		_heightNumbers [1].transform.position = new Vector3(spherePosition.x, spherePosition.y+2, -1);
-		//_heightNumbers [1].transform.position = new Vector3 (_camera.transform.position.x, _camera.transform.position.y  - 8, -1);
-
-		if (_height > _bestHeight) {
-			_heightNumbers [1].GetComponent<TextMesh> ().text = (_height).ToString () + "m";
-			_bestHeight = _height;
-		}*/
-
-		if (_height > _bestHeight ) {
-			_bestHeight = _height;
-			_bestScore.text = _bestHeight.ToString() + "m";
 		}
 
+	
+
 		if (_bplay) {
-			
+
+			_height = (int) (_sphere.transform.position.y + 8.2f);
+			if (_height > _bestHeight ) {
+				_bestHeight = _height;
+				_bestScore.text = _bestHeight.ToString() + "m";
+			}
+
 			if (Input.GetMouseButtonDown (0)) {
 				_mouseInPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				_mouseClicked = true;
@@ -133,11 +163,14 @@ public class Manager : MonoBehaviour, IGameObject {
 			} else {
 				_mouseOutPos.z = -10;
 				_lastCameraPositionY = _mouseOutPos.y + 1;
-				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY, -10), Time.deltaTime * 3);
+				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 			}
 		} else {
+			
 			if (Input.GetMouseButtonUp (0)) {
-				GameInit ();
+				_panel.gameObject.SetActive (false);
+				_bplay = true;
+				_sphere.SphereResume ();
 			}
 		}
 	}

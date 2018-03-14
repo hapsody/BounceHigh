@@ -38,7 +38,7 @@
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor" >
+            android:screenOrientation="sensorPortrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +53,7 @@
 
         <meta-data
             android:name="unity.build-id"
-            android:value="6d13d7b5-5f19-44d1-936b-1ec07f63d027" />
+            android:value="fa48475c-18f6-4116-b6e0-a9dc7d851ecc" />
         <meta-data
             android:name="unity.splash-mode"
             android:value="0" />

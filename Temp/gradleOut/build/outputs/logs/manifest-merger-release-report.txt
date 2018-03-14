@@ -46,13 +46,13 @@ ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.
 activity#com.unity3d.player.UnityPlayerActivity
 ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:5-12:16
 	android:screenOrientation
-		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:102-140
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:102-144
 	android:label
 		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:69-101
 	android:launchMode
-		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:141-172
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:145-176
 	android:configChanges
-		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:173-354
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:177-358
 	android:name
 		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:15-68
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER+android.intent.category.LEANBACK_LAUNCHER
