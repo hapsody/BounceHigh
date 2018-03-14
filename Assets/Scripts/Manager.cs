@@ -49,7 +49,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	private ParticleSystem _particleSystem = null;
 	[SerializeField]
 	private ParticleSystem _particleSystem2 = null;
-
+	private bool _sphereDestroyed = false;
 
 	void Awake() {
 		_instance = this;
@@ -107,6 +107,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_sampleCube.transform.position = _cubes [0].transform.position = new Vector3 (0, 0, -20);
 		_bestHeight = 0;
 		_bestScore.text = "0m";
+		_sphereDestroyed = false;
 
 	}
 
@@ -122,12 +123,15 @@ public class Manager : MonoBehaviour, IGameObject {
 		if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _lastCameraPositionY - 25) {
 			GameStop ();
 
-			if (_sphere.transform.position.x < -13) {
-				_particleSystem.transform.position = new Vector3 (_sphere.transform.position.x + 1.5f, _sphere.transform.position.y, -1);
+			if (!_sphereDestroyed && _sphere.transform.position.x < -13) {
+				_particleSystem.transform.position = new Vector3 (-12.5f, _sphere.transform.position.y, -1);
 				_particleSystem.Play ();
-			} else if (_sphere.transform.position.x > 13) {
-				_particleSystem2.transform.position = new Vector3 (_sphere.transform.position.x - 1.5f, _sphere.transform.position.y, -1);
+				_sphereDestroyed = true;
+			} else if (!_sphereDestroyed &&_sphere.transform.position.x > 13) {
+				_particleSystem2.transform.position = new Vector3 (12.5f, _sphere.transform.position.y, -1);
 				_particleSystem2.Play ();
+				_sphereDestroyed = true;
+
 			} 
 
 		}
