@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 
 public class Manager : MonoBehaviour, IGameObject {
@@ -29,7 +29,6 @@ public class Manager : MonoBehaviour, IGameObject {
 	[SerializeField]
 	private GameObject _sampleCube;
 
-
 	private Vector3 _mouseInPos;
 	private Vector3 _mouseOutPos;
 
@@ -40,6 +39,8 @@ public class Manager : MonoBehaviour, IGameObject {
 	private float _distanceX;
 	private float _lastCameraPositionY;
 
+	[SerializeField]
+	private Text _bestScore;
 
 	void Awake() {
 		_instance = this;
@@ -72,22 +73,23 @@ public class Manager : MonoBehaviour, IGameObject {
 	public void GameUpdate()
 	{
 
-		if (_sphere.transform.position.x < -10 || _sphere.transform.position.x > 10 || _sphere.transform.position.y < _lastCameraPositionY - 20) 
+		if (_sphere.transform.position.x < -11.73 || _sphere.transform.position.x > 11.73 || _sphere.transform.position.y < _lastCameraPositionY - 25) 
 			GameStop ();
 
 		_height = (int) (_sphere.transform.position.y + 8.2f);
 		/*
-		_heightNumbers[0].GetComponent<TextMesh>().text =  (_height).ToString() + "m";
-		var spherePosition =  _sphere.transform.position;
-
-		_heightNumbers [0].transform.position = new Vector3(spherePosition.x-1.5f, spherePosition.y+3, -1);
-*/
 		var spherePosition =  _sphere.transform.position;
 		_heightNumbers [1].transform.position = new Vector3(spherePosition.x, spherePosition.y+2, -1);
 		//_heightNumbers [1].transform.position = new Vector3 (_camera.transform.position.x, _camera.transform.position.y  - 8, -1);
+
 		if (_height > _bestHeight) {
 			_heightNumbers [1].GetComponent<TextMesh> ().text = (_height).ToString () + "m";
 			_bestHeight = _height;
+		}*/
+
+		if (_height > _bestHeight ) {
+			_bestHeight = _height;
+			_bestScore.text = _bestHeight.ToString() + "m";
 		}
 
 		if (_bplay) {
