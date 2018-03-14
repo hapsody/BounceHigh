@@ -45,3 +45,5 @@
 /Users/kangheejun/BounceHigh/Temp/bin/Debug/Unity.Cecil.Mdb.dll
 /Users/kangheejun/BounceHigh/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll
 /Users/kangheejun/BounceHigh/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.xml
+/Users/kangheejun/BounceHigh/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/kangheejun/BounceHigh/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb

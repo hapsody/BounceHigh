@@ -45,6 +45,12 @@ public class Manager : MonoBehaviour, IGameObject {
 	private Transform _panel;
 	private float _panelAlpha = 0f;
 	private bool _alphaIncrease = true;
+	[SerializeField]
+	private ParticleSystem _particleSystem = null;
+	[SerializeField]
+	private ParticleSystem _particleSystem2 = null;
+
+
 	void Awake() {
 		_instance = this;
 	}
@@ -56,8 +62,9 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	IEnumerator PanelFadeIn()
 	{
+		_panelAlpha = 1f;
 		while (true) {
-			
+			/* // fade in and out
 		if (_alphaIncrease){
 			if (_panelAlpha < 1)
 				_panelAlpha += Time.deltaTime * 2;
@@ -67,17 +74,24 @@ public class Manager : MonoBehaviour, IGameObject {
 			}
 		} 
 		else {
-			if (_panelAlpha > 0.5)
-				_panelAlpha -= Time.deltaTime; 
+			if (_panelAlpha > 0)
+				_panelAlpha -= Time.deltaTime * 2; 
 			else {
 				_panelAlpha = 0f;
 				_alphaIncrease = true;
 				break;
 			}
 		}
-		
+		*/
+			// just fade out
+			if (_panelAlpha > 0)
+				_panelAlpha -= Time.deltaTime; 
+			else {
+				_panelAlpha = 0f;
+				_alphaIncrease = true;
+				break;
+			}
 
-			Debug.Log (_panelAlpha);
 			Color color = new Color (1, 1, 1, _panelAlpha);
 			_panel.gameObject.GetComponent<Image> ().color = color;
 			yield return new WaitForSeconds (0.01f);
@@ -86,8 +100,6 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	void GameInit()
 	{
-		
-		_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, -5, -10), Time.deltaTime * 3);
 		_lastCameraPositionY = 0f;
 		_sphere.transform.position = new Vector3 (0, 0, 0);
 		_mouseClicked = false;
@@ -108,13 +120,17 @@ public class Manager : MonoBehaviour, IGameObject {
 	{
 
 		if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _lastCameraPositionY - 25) {
-			_panel.gameObject.SetActive (true);
-			GameInit ();
-			StartCoroutine ("PanelFadeIn");
 			GameStop ();
-		}
 
-	
+			if (_sphere.transform.position.x < -13) {
+				_particleSystem.transform.position = new Vector3 (_sphere.transform.position.x + 1.5f, _sphere.transform.position.y, -1);
+				_particleSystem.Play ();
+			} else if (_sphere.transform.position.x > 13) {
+				_particleSystem2.transform.position = new Vector3 (_sphere.transform.position.x - 1.5f, _sphere.transform.position.y, -1);
+				_particleSystem2.Play ();
+			} 
+
+		}
 
 		if (_bplay) {
 
@@ -166,9 +182,15 @@ public class Manager : MonoBehaviour, IGameObject {
 				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 			}
 		} else {
-			
+			_mouseOutPos.z = -10;
+			_lastCameraPositionY = _mouseOutPos.y + 1;
+			_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
+
 			if (Input.GetMouseButtonUp (0)) {
-				_panel.gameObject.SetActive (false);
+				_panel.gameObject.SetActive (true);
+				StartCoroutine ("PanelFadeIn");
+
+				GameInit ();
 				_bplay = true;
 				_sphere.SphereResume ();
 			}
