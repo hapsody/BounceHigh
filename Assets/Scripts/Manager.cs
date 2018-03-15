@@ -1,9 +1,9 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour, IGameObject {
 
@@ -51,6 +51,12 @@ public class Manager : MonoBehaviour, IGameObject {
 	private ParticleSystem _particleSystem2 = null;
 	private bool _sphereDestroyed = false;
 
+
+	[SerializeField]
+	private GameObject _block = null;
+	private List<GameObject> _blockList = new List<GameObject>();
+	private float _minHeight;
+
 	void Awake() {
 		_instance = this;
 	}
@@ -58,31 +64,42 @@ public class Manager : MonoBehaviour, IGameObject {
 	// Use this for initialization
 	void Start () {
 		GameInit ();
+		StartCoroutine ("ClimbUpCAM");
+	}
+	/*
+	IEnumerator GrowthTree(){
+		while (true) {
+			//var scale = _tree.transform.localScale;
+			//scale = new Vector3 (scale.x + Time.deltaTime * 0.001f, scale.y + Time.deltaTime * 0.001f, 0.1f);
+			//_tree.transform.localScale = scale;
+			var treeData = _tree.data as TreeEditor.TreeData;
+			if (treeData != null) {
+				var branchGroups = treeData.branchGroups;
+				Debug.Log ("branchlength"+branchGroups.Length);
+			}
+			yield return new WaitForSeconds (0.02f);
+		}
+	}
+*/
+
+
+	IEnumerator ClimbUpCAM()
+	{
+		while (_bplay) {
+			_minHeight += Time.deltaTime * 2;
+
+			if (_minHeight > _lastCameraPositionY+5) 
+				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _minHeight, -10), Time.deltaTime * 3);
+			
+			yield return new WaitForSeconds (0.01f);
+		}
 	}
 
 	IEnumerator PanelFadeIn()
 	{
 		_panelAlpha = 1f;
 		while (true) {
-			/* // fade in and out
-		if (_alphaIncrease){
-			if (_panelAlpha < 1)
-				_panelAlpha += Time.deltaTime * 2;
-			else {
-				_panelAlpha = 1f;
-				_alphaIncrease = false;
-			}
-		} 
-		else {
-			if (_panelAlpha > 0)
-				_panelAlpha -= Time.deltaTime * 2; 
-			else {
-				_panelAlpha = 0f;
-				_alphaIncrease = true;
-				break;
-			}
-		}
-		*/
+
 			// just fade out
 			if (_panelAlpha > 0)
 				_panelAlpha -= Time.deltaTime; 
@@ -108,36 +125,58 @@ public class Manager : MonoBehaviour, IGameObject {
 		_bestHeight = 0;
 		_bestScore.text = "0m";
 		_sphereDestroyed = false;
+		_mouseOutPos = new Vector3 (0, 0, -10);
+		_minHeight = 4.5f;
+		BlockRemover ();
 
 	}
 
-	void GameStop(){
+	public void GameStop(){
 		_bplay = false;
 		_sphere.SphereFreeze ();
+
+		if (!_sphereDestroyed && _sphere.transform.position.x < -13) {
+			_particleSystem.transform.position = new Vector3 (-12.5f, _sphere.transform.position.y, -1);
+			_particleSystem.Play ();
+			_sphereDestroyed = true;
+		} else if (!_sphereDestroyed &&_sphere.transform.position.x > 13) {
+			_particleSystem2.transform.position = new Vector3 (12.5f, _sphere.transform.position.y, -1);
+			_particleSystem2.Play ();
+			_sphereDestroyed = true;
+
+		} 
 	}
 
+	IEnumerator BlockGenerator()
+	{
+		while (_bplay) {
+			_block.transform.position = new Vector3 (Random.Range (-11, 11), _camera.transform.position.y + 20, -1);
+			_block.transform.localScale = new Vector3 (1, 1, Random.Range (1f, 3f));
+			//_block.transform.Rotate (new Vector3 (Random.Range (0, 180), 0, 0));
+			_blockList.Add (GameObject.Instantiate (_block));
+			yield return new WaitForSeconds (Random.Range (10, 15));
+		}
+	}
+
+	public void BlockRemover()
+	{
+		for (int i = _blockList.Count-1; i >= 0; i--) {
+			Destroy (_blockList [i]);
+			_blockList.RemoveAt (i);
+		}
+	}
 
 	public void GameUpdate()
 	{
 
-		if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _lastCameraPositionY - 25) {
+		Debug.Log (_bplay);
+
+		if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _lastCameraPositionY - 20)
 			GameStop ();
 
-			if (!_sphereDestroyed && _sphere.transform.position.x < -13) {
-				_particleSystem.transform.position = new Vector3 (-12.5f, _sphere.transform.position.y, -1);
-				_particleSystem.Play ();
-				_sphereDestroyed = true;
-			} else if (!_sphereDestroyed &&_sphere.transform.position.x > 13) {
-				_particleSystem2.transform.position = new Vector3 (12.5f, _sphere.transform.position.y, -1);
-				_particleSystem2.Play ();
-				_sphereDestroyed = true;
-
-			} 
-
-		}
 
 		if (_bplay) {
-
+			
 			_height = (int) (_sphere.transform.position.y + 8.2f);
 			if (_height > _bestHeight ) {
 				_bestHeight = _height;
@@ -181,12 +220,13 @@ public class Manager : MonoBehaviour, IGameObject {
 				_sampleCube.transform.rotation = quaternion;
 
 			} else {
-				_mouseOutPos.z = -10;
+				//_mouseOutPos.z = -10;
 				_lastCameraPositionY = _mouseOutPos.y + 1;
-				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
+				if(_minHeight < _lastCameraPositionY + 5)
+					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 			}
-		} else {
-			_mouseOutPos.z = -10;
+		} else { // when game is stopped
+			//_mouseOutPos.z = -10;
 			_lastCameraPositionY = _mouseOutPos.y + 1;
 			_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 
@@ -196,6 +236,8 @@ public class Manager : MonoBehaviour, IGameObject {
 
 				GameInit ();
 				_bplay = true;
+				StartCoroutine ("ClimbUpCAM");
+				StartCoroutine ("BlockGenerator");
 				_sphere.SphereResume ();
 			}
 		}

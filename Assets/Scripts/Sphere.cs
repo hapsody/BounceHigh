@@ -19,7 +19,10 @@ public class Sphere : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision target){
-		_rigidbody.AddForce (target.transform.up * 1000);
+		if (target.transform.tag == "obstacle")
+			Manager.Instance.GameStop ();
+		else
+			_rigidbody.AddForce (target.transform.up * 1000);
 
 	}
 }
