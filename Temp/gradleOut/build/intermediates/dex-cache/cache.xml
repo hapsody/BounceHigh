@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/BounceHigh/Temp/gradleOut/libs/unity-classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="2d302418aa3482b8db770278260340aed47dd37a">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/unity-classes_88a46e613815f7a1c3be726a12ff03758857e97d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/556f7bf644c9ad7b10dafdd3d390c62a15aeeeff/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="e7005ffa9078991e5b1bd3943cb649234308e89c">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_cd55cad6c92d796f8293cd362939fc96cbbfe950.jar" />
+    </item>
+
+</items>

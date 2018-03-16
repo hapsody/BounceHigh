@@ -40,6 +40,8 @@ public class Manager : MonoBehaviour, IGameObject {
 	private float _lastCameraPositionY;
 
 	[SerializeField]
+	private Text _title = null;
+	[SerializeField]
 	private Text _bestScore;
 	[SerializeField]
 	private Transform _panel;
@@ -51,11 +53,15 @@ public class Manager : MonoBehaviour, IGameObject {
 	private ParticleSystem _particleSystem2 = null;
 	private bool _sphereDestroyed = false;
 
+	private int _playCount = 0;
 
 	[SerializeField]
 	private GameObject _block = null;
 	private List<GameObject> _blockList = new List<GameObject>();
 	private float _minHeight;
+
+	[SerializeField]
+	private UnityAdsHelper _unityAdsHelper = null;
 
 	void Awake() {
 		_instance = this;
@@ -63,8 +69,7 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	// Use this for initialization
 	void Start () {
-		GameInit ();
-		StartCoroutine ("ClimbUpCAM");
+		GameStart ();
 	}
 	/*
 	IEnumerator GrowthTree(){
@@ -128,6 +133,19 @@ public class Manager : MonoBehaviour, IGameObject {
 		_mouseOutPos = new Vector3 (0, 0, -10);
 		_minHeight = 4.5f;
 		BlockRemover ();
+		_playCount++;
+
+	}
+
+	public void GameStart() {
+		GameInit ();
+		_sphere.SphereResume ();
+		Color color = new Color (1, 1, 1, 0);
+		_panel.gameObject.GetComponent<Image> ().color = color;
+		_title.gameObject.SetActive (true);
+		_panel.gameObject.SetActive (true);
+		_playCount = 0;
+		_bplay = false;
 
 	}
 
@@ -168,9 +186,6 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	public void GameUpdate()
 	{
-
-		Debug.Log (_bplay);
-
 		if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _lastCameraPositionY - 20)
 			GameStop ();
 
@@ -181,6 +196,7 @@ public class Manager : MonoBehaviour, IGameObject {
 			if (_height > _bestHeight ) {
 				_bestHeight = _height;
 				_bestScore.text = _bestHeight.ToString() + "m";
+
 			}
 
 			if (Input.GetMouseButtonDown (0)) {
@@ -231,7 +247,12 @@ public class Manager : MonoBehaviour, IGameObject {
 			_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 
 			if (Input.GetMouseButtonUp (0)) {
+				if (_playCount >= 10) {
+					_unityAdsHelper.ShowAds ();
+					_playCount = 0;
+				}
 				_panel.gameObject.SetActive (true);
+				_title.gameObject.SetActive (false);
 				StartCoroutine ("PanelFadeIn");
 
 				GameInit ();

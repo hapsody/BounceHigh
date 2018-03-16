@@ -16,12 +16,11 @@ public class Sphere : MonoBehaviour {
 
 	public void SphereResume(){
 		_rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+
 	}
 
 	void OnCollisionEnter(Collision target){
-		if (target.transform.tag == "obstacle")
-			Manager.Instance.GameStop ();
-		else
+		if (target.transform.tag != "obstacle")
 			_rigidbody.AddForce (target.transform.up * 1000);
 
 	}
