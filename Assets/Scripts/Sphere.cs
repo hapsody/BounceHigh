@@ -15,7 +15,7 @@ public class Sphere : MonoBehaviour {
 	}
 
 	public void SphereResume(){
-		_rigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
+		_rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
 
 	}
 

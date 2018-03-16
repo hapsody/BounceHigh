@@ -168,8 +168,8 @@ public class Manager : MonoBehaviour, IGameObject {
 	IEnumerator BlockGenerator()
 	{
 		while (_bplay) {
-			_block.transform.position = new Vector3 (Random.Range (-11, 11), _camera.transform.position.y + 20, -1);
-			_block.transform.localScale = new Vector3 (1, 1, Random.Range (1f, 3f));
+			_block.transform.position = new Vector3 (Random.Range (-11, 11), _camera.transform.position.y + 30, 0);
+			_block.transform.localScale = new Vector3 (0.01f, 1, Random.Range (1f, 3f));
 			//_block.transform.Rotate (new Vector3 (Random.Range (0, 180), 0, 0));
 			_blockList.Add (GameObject.Instantiate (_block));
 			yield return new WaitForSeconds (Random.Range (10, 15));
