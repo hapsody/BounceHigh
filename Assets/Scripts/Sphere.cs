@@ -20,8 +20,11 @@ public class Sphere : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision target){
-		if (target.transform.tag != "obstacle")
+		if (target.transform.tag != "obstacle") {
 			_rigidbody.AddForce (target.transform.up * 1000);
+		} else {
+			_rigidbody.AddForce (target.transform.up * 200);
+		}
 
 	}
 }

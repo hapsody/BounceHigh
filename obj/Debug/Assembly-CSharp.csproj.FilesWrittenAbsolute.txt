@@ -47,3 +47,7 @@
 /Users/kangheejun/BounceHigh/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.xml
 /Users/kangheejun/BounceHigh/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
 /Users/kangheejun/BounceHigh/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
+/Users/kangheejun/BounceHigh/Temp/bin/Debug/Google.JarResolver_v1.2.61.0.dll
+/Users/kangheejun/BounceHigh/Temp/bin/Debug/Google.VersionHandler.dll
+/Users/kangheejun/BounceHigh/Temp/bin/Debug/Google.IOSResolver_v1.2.61.0.dll
+/Users/kangheejun/BounceHigh/Temp/bin/Debug/Google.VersionHandlerImpl_v1.2.61.0.dll

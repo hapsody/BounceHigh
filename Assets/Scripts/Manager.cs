@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UI;
+
 
 public class Manager : MonoBehaviour, IGameObject {
 
@@ -14,14 +14,13 @@ public class Manager : MonoBehaviour, IGameObject {
 	private GameObject[] _heightNumbers = new GameObject[3];
 	private int _height = 0;
 	private int _bestHeight =0;
+	private string _leaderBoardID = "CgkIv4X7_csFEAIQAQ";
 
 	private bool _bplay = true;
 	public bool BPLAY { get { return _bplay; } set { _bplay = value; } }
 	[SerializeField]
 	private Sphere _sphere = null;
 
-	[SerializeField]
-	private GameObject _bgResourceCircle;
 	[SerializeField]
 	private GameObject[] _cubes = new GameObject[2];
 	private int turn = 0;
@@ -46,12 +45,14 @@ public class Manager : MonoBehaviour, IGameObject {
 	[SerializeField]
 	private Transform _panel;
 	private float _panelAlpha = 0f;
-	private bool _alphaIncrease = true;
 	[SerializeField]
 	private ParticleSystem _particleSystem = null;
 	[SerializeField]
 	private ParticleSystem _particleSystem2 = null;
 	private bool _sphereDestroyed = false;
+	[SerializeField]
+	private Transform _pausePanel;
+	private bool _replay = true;
 
 	private int _playCount = 0;
 
@@ -63,6 +64,9 @@ public class Manager : MonoBehaviour, IGameObject {
 	[SerializeField]
 	private UnityAdsHelper _unityAdsHelper = null;
 
+	[SerializeField]
+	private GPGSManager _gpgsManager = null;
+
 	void Awake() {
 		_instance = this;
 	}
@@ -70,7 +74,12 @@ public class Manager : MonoBehaviour, IGameObject {
 	// Use this for initialization
 	void Start () {
 		GameStart ();
+
+
+
+
 	}
+
 	/*
 	IEnumerator GrowthTree(){
 		while (true) {
@@ -110,7 +119,6 @@ public class Manager : MonoBehaviour, IGameObject {
 				_panelAlpha -= Time.deltaTime; 
 			else {
 				_panelAlpha = 0f;
-				_alphaIncrease = true;
 				break;
 			}
 
@@ -153,6 +161,9 @@ public class Manager : MonoBehaviour, IGameObject {
 		_bplay = false;
 		_sphere.SphereFreeze ();
 
+		if (_pausePanel.gameObject.activeSelf == false)			
+			_pausePanel.gameObject.SetActive (true);
+
 		if (!_sphereDestroyed && _sphere.transform.position.x < -13) {
 			_particleSystem.transform.position = new Vector3 (-12.5f, _sphere.transform.position.y, -1);
 			_particleSystem.Play ();
@@ -186,18 +197,17 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	public void GameUpdate()
 	{
-		if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _lastCameraPositionY - 20)
-			GameStop ();
-
-
 		if (_bplay) {
-			
+
+			if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _minHeight - 25 )//_lastCameraPositionY - 20)
+				GameStop ();
+
 			_height = (int) (_sphere.transform.position.y + 8.2f);
 			if (_height > _bestHeight ) {
 				_bestHeight = _height;
 				_bestScore.text = _bestHeight.ToString() + "m";
-
 			}
+
 
 			if (Input.GetMouseButtonDown (0)) {
 				_mouseInPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
@@ -221,7 +231,7 @@ public class Manager : MonoBehaviour, IGameObject {
 			if (_mouseClicked) {
 				_mouseOutPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 				_distanceX = Vector3.Distance (_mouseOutPos, _mouseInPos) * 2;
-				float cubeLengthLimit = 7;
+				float cubeLengthLimit = 10;
 				if (_distanceX < cubeLengthLimit) {
 					_sampleCube.transform.position = new Vector3 (_mouseInPos.x, _mouseInPos.y, 0);
 					_sampleCube.transform.localScale = new Vector3 (_distanceX, 0.1f, 1.0f);
@@ -238,16 +248,19 @@ public class Manager : MonoBehaviour, IGameObject {
 			} else {
 				//_mouseOutPos.z = -10;
 				_lastCameraPositionY = _mouseOutPos.y + 1;
-				if(_minHeight < _lastCameraPositionY + 5)
-					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
+				if (_minHeight < _lastCameraPositionY + 5) {
+			
+					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY + 5, -10), Time.deltaTime * 3);
+				}
 			}
 		} else { // when game is stopped
 			//_mouseOutPos.z = -10;
 			_lastCameraPositionY = _mouseOutPos.y + 1;
-			_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
+			//_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 
-			if (Input.GetMouseButtonUp (0)) {
-				if (_playCount >= 10) {
+			if (Input.GetMouseButtonUp (0) && _replay) {
+			//if (_replay) {
+				if (_playCount >= 12) {
 					_unityAdsHelper.ShowAds ();
 					_playCount = 0;
 				}
@@ -260,6 +273,7 @@ public class Manager : MonoBehaviour, IGameObject {
 				StartCoroutine ("ClimbUpCAM");
 				StartCoroutine ("BlockGenerator");
 				_sphere.SphereResume ();
+				_replay = false;
 			}
 		}
 	}
@@ -269,7 +283,19 @@ public class Manager : MonoBehaviour, IGameObject {
 		GameUpdate ();
 	}
 
+	public void ReplayButton(){
+		_replay = true;
+		_pausePanel.gameObject.SetActive (false);
+	}
 
-
+	public void RankButton(){
+		Debug.Log ("rank");
+		_gpgsManager.SignIn ();
+		_gpgsManager.ReportScore (_bestHeight);
+		_gpgsManager.ShowLeaderboardUI ();
 		
+//		SignIn ();
+	//	ShowLeaderboardUI ();
+	}
+
 }

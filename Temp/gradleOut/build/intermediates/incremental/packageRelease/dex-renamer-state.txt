@@ -1,4 +1,4 @@
-#Fri Mar 16 15:54:26 KST 2018
+#Wed Mar 21 09:33:19 KST 2018
 base.0=/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/transforms/dex/release/folders/1000/1f/main
 renamed.0=classes.dex
 file.0=/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/transforms/dex/release/folders/1000/1f/main/classes.dex
