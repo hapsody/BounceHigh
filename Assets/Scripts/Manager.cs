@@ -16,6 +16,9 @@ public class Manager : MonoBehaviour, IGameObject {
 	private int _bestHeight =0;
 	private string _leaderBoardID = "CgkIv4X7_csFEAIQAQ";
 
+	[SerializeField]
+	private GameObject _background = null;
+
 	private bool _bplay = true;
 	public bool BPLAY { get { return _bplay; } set { _bplay = value; } }
 	[SerializeField]
@@ -41,7 +44,15 @@ public class Manager : MonoBehaviour, IGameObject {
 	[SerializeField]
 	private Text _title = null;
 	[SerializeField]
-	private Text _bestScore;
+	private Text _bestScoreTitle;
+	[SerializeField]
+	private Text _levelTitle;
+	[SerializeField]
+	private Text _scoreTitle;
+
+	private int _level;
+
+
 	[SerializeField]
 	private Transform _panel;
 	private float _panelAlpha = 0f;
@@ -66,6 +77,10 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	[SerializeField]
 	private GPGSManager _gpgsManager = null;
+
+	bool _increaseR = true;
+	bool _increaseG = true;
+	bool _increaseB = true;
 
 	void Awake() {
 		_instance = this;
@@ -100,7 +115,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	IEnumerator ClimbUpCAM()
 	{
 		while (_bplay) {
-			_minHeight += Time.deltaTime * 2;
+			_minHeight += Time.deltaTime * 2 * _level;
 
 			if (_minHeight > _lastCameraPositionY+5) 
 				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _minHeight, -10), Time.deltaTime * 3);
@@ -128,6 +143,16 @@ public class Manager : MonoBehaviour, IGameObject {
 		}
 	}
 
+	IEnumerator LevelUp()
+	{
+		_level = 0;
+		while (_bplay) {
+			_level++;
+			_levelTitle.text = "LEVEL : "+_level;
+			yield return new WaitForSeconds (25);
+		}
+	}
+
 	void GameInit()
 	{
 		_lastCameraPositionY = 0f;
@@ -136,7 +161,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_mouseInPos = _mouseOutPos = new Vector3 (0, 0, 0);
 		_sampleCube.transform.position = _cubes [0].transform.position = new Vector3 (0, 0, -20);
 		_bestHeight = 0;
-		_bestScore.text = "0m";
+		_scoreTitle.text = "0m";
 		_sphereDestroyed = false;
 		_mouseOutPos = new Vector3 (0, 0, -10);
 		_minHeight = 4.5f;
@@ -159,7 +184,16 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	public void GameStop(){
 		_bplay = false;
+		_bestScoreTitle.gameObject.SetActive (false);
+		_levelTitle.gameObject.SetActive (false);
+
 		_sphere.SphereFreeze ();
+		int temp = PlayerPrefs.GetInt ("_bestScore");
+	
+		if (temp < _bestHeight) {
+			PlayerPrefs.SetInt ("_bestScore", _bestHeight);
+			PlayerPrefs.Save ();
+		}
 
 		if (_pausePanel.gameObject.activeSelf == false)			
 			_pausePanel.gameObject.SetActive (true);
@@ -195,17 +229,67 @@ public class Manager : MonoBehaviour, IGameObject {
 		}
 	}
 
+	public void AmbientBackgroundEffect(){
+		Color color = _background.GetComponent<SpriteRenderer> ().material.color;
+
+		if (color.r < 0.1f) {
+			color.r = 0.1f;
+			_increaseR = true;
+		} else if (color.r > 0.9f) {
+			color.r = 0.9f;
+			_increaseR = false;
+		}
+
+		if( _increaseR )
+			color.r += Random.Range (0.001f, 0.01f);
+		else
+			color.r -= Random.Range (0.001f, 0.01f);
+
+
+		if (color.b < 0.1f) {
+			color.b = 0.1f;
+			_increaseB = true;
+		} else if (color.r > 0.9f) {
+			color.b = 0.9f;
+			_increaseB = false;
+		}
+
+		if( _increaseB )
+			color.b += Random.Range (0.001f, 0.01f);
+		else
+			color.b -= Random.Range (0.001f, 0.01f);
+
+
+		if (color.g < 0.1f) {
+			color.g = 0.1f;
+			_increaseG = true;
+		} else if (color.g > 0.9f) {
+			color.g = 0.9f;
+			_increaseG = false;
+		}
+
+		if( _increaseG)
+			color.g += Random.Range (0.001f, 0.01f);
+		else
+			color.g -= Random.Range (0.001f, 0.01f);
+
+
+		_background.GetComponent<SpriteRenderer> ().material.color = color;
+
+	}
+
 	public void GameUpdate()
 	{
 		if (_bplay) {
+			AmbientBackgroundEffect ();
 
-			if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _minHeight - 25 )//_lastCameraPositionY - 20)
+			if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _minHeight - 27 )//_lastCameraPositionY - 20)
 				GameStop ();
 
 			_height = (int) (_sphere.transform.position.y + 8.2f);
 			if (_height > _bestHeight ) {
 				_bestHeight = _height;
-				_bestScore.text = _bestHeight.ToString() + "m";
+				_scoreTitle.text = _bestHeight.ToString() + "m";
 			}
 
 
@@ -249,7 +333,7 @@ public class Manager : MonoBehaviour, IGameObject {
 				//_mouseOutPos.z = -10;
 				_lastCameraPositionY = _mouseOutPos.y + 1;
 				if (_minHeight < _lastCameraPositionY + 5) {
-			
+					_minHeight = _lastCameraPositionY + 5;
 					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY + 5, -10), Time.deltaTime * 3);
 				}
 			}
@@ -259,7 +343,12 @@ public class Manager : MonoBehaviour, IGameObject {
 			//_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 
 			if (Input.GetMouseButtonUp (0) && _replay) {
-			//if (_replay) {
+				_scoreTitle.gameObject.SetActive (true);
+				_bestScoreTitle.gameObject.SetActive (true);
+				_levelTitle.gameObject.SetActive (true);
+				int temp = PlayerPrefs.GetInt ("_bestScore");
+				_bestScoreTitle.text = "Best : "+ temp.ToString () + "m";
+
 				if (_playCount >= 12) {
 					_unityAdsHelper.ShowAds ();
 					_playCount = 0;
@@ -272,6 +361,7 @@ public class Manager : MonoBehaviour, IGameObject {
 				_bplay = true;
 				StartCoroutine ("ClimbUpCAM");
 				StartCoroutine ("BlockGenerator");
+				StartCoroutine ("LevelUp");
 				_sphere.SphereResume ();
 				_replay = false;
 			}
@@ -294,8 +384,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_gpgsManager.ReportScore (_bestHeight);
 		_gpgsManager.ShowLeaderboardUI ();
 		
-//		SignIn ();
-	//	ShowLeaderboardUI ();
+
 	}
 
 }
