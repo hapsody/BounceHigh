@@ -117,8 +117,18 @@ public class Manager : MonoBehaviour, IGameObject {
 		while (_bplay) {
 			_minHeight += Time.deltaTime * 2 * _level;
 
-			if (_minHeight > _lastCameraPositionY+5) 
-				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _minHeight, -10), Time.deltaTime * 3);
+			if (_minHeight > _lastCameraPositionY + 5) {
+				
+				float cameraX;
+				if (_sphere.transform.position.x > 13.5f)
+					cameraX = 13.5f;
+				else if ( _sphere.transform.position.x < -13.5f) 
+					cameraX = -13.5f;
+				else//( _sphere.transform.position.x <= 13.5 && _sphere.transform.position.x >= -13.5)
+					cameraX = _sphere.transform.position.x;
+
+				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (cameraX, _minHeight, -10), Time.deltaTime * 3);
+			}
 			
 			yield return new WaitForSeconds (0.01f);
 		}
@@ -149,7 +159,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		while (_bplay) {
 			_level++;
 			_levelTitle.text = "LEVEL : "+_level;
-			yield return new WaitForSeconds (25);
+			yield return new WaitForSeconds (15);
 		}
 	}
 
@@ -179,6 +189,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_panel.gameObject.SetActive (true);
 		_playCount = 0;
 		_bplay = false;
+		_background.GetComponent<SpriteRenderer> ().material.color = new Vector4 (Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), 1f);
 
 	}
 
@@ -198,12 +209,12 @@ public class Manager : MonoBehaviour, IGameObject {
 		if (_pausePanel.gameObject.activeSelf == false)			
 			_pausePanel.gameObject.SetActive (true);
 
-		if (!_sphereDestroyed && _sphere.transform.position.x < -13) {
-			_particleSystem.transform.position = new Vector3 (-12.5f, _sphere.transform.position.y, -1);
+		if (!_sphereDestroyed && _sphere.transform.position.x < -26) {
+			_particleSystem.transform.position = new Vector3 (-25.5f, _sphere.transform.position.y, -1);
 			_particleSystem.Play ();
 			_sphereDestroyed = true;
-		} else if (!_sphereDestroyed &&_sphere.transform.position.x > 13) {
-			_particleSystem2.transform.position = new Vector3 (12.5f, _sphere.transform.position.y, -1);
+		} else if (!_sphereDestroyed &&_sphere.transform.position.x > 26) {
+			_particleSystem2.transform.position = new Vector3 (25.5f, _sphere.transform.position.y, -1);
 			_particleSystem2.Play ();
 			_sphereDestroyed = true;
 
@@ -213,11 +224,14 @@ public class Manager : MonoBehaviour, IGameObject {
 	IEnumerator BlockGenerator()
 	{
 		while (_bplay) {
-			_block.transform.position = new Vector3 (Random.Range (-11, 11), _camera.transform.position.y + 30, 0);
-			_block.transform.localScale = new Vector3 (0.01f, 1, Random.Range (1f, 3f));
+			_block.transform.position = new Vector3 (Random.Range (-24, 24), _camera.transform.position.y + 30, 0);
+			_block.transform.localScale = new Vector3 (0.01f, 1, Random.Range (2f, 3f));
 			//_block.transform.Rotate (new Vector3 (Random.Range (0, 180), 0, 0));
 			_blockList.Add (GameObject.Instantiate (_block));
-			yield return new WaitForSeconds (Random.Range (10, 15));
+			if(_level < 20)
+				yield return new WaitForSeconds (Random.Range (10 - _level, 15 - _level));
+			else
+				yield return new WaitForSeconds (Random.Range (1, 3));
 		}
 	}
 
@@ -283,7 +297,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		if (_bplay) {
 			AmbientBackgroundEffect ();
 
-			if (_sphere.transform.position.x < -13 || _sphere.transform.position.x > 13 || _sphere.transform.position.y < _minHeight - 27 )//_lastCameraPositionY - 20)
+			if (_sphere.transform.position.x < -26.2 || _sphere.transform.position.x > 26.2 || _sphere.transform.position.y < _minHeight - 27 )//_lastCameraPositionY - 20)
 				GameStop ();
 
 			_height = (int) (_sphere.transform.position.y + 8.2f);
@@ -334,7 +348,18 @@ public class Manager : MonoBehaviour, IGameObject {
 				_lastCameraPositionY = _mouseOutPos.y + 1;
 				if (_minHeight < _lastCameraPositionY + 5) {
 					_minHeight = _lastCameraPositionY + 5;
-					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY + 5, -10), Time.deltaTime * 3);
+
+				float cameraX;
+				if (_sphere.transform.position.x > 13.5f)
+					cameraX = 13.5f;
+				else if ( _sphere.transform.position.x < -13.5f) 
+					cameraX = -13.5f;
+				else//( _sphere.transform.position.x <= 13.5 && _sphere.transform.position.x >= -13.5)
+					cameraX = _sphere.transform.position.x;
+				
+				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (cameraX, _lastCameraPositionY + 5, -10), Time.deltaTime * 3);
+					
+						
 				}
 			}
 		} else { // when game is stopped
