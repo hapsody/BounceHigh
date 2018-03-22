@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/41b7ecde38222aa1ca936b1f925f3ff06fbc461f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="95b1eb2549f384e70a77b72e4f360ed4c8dc0331">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_d6056f1ea2b804a2cc3aea807d9212c627cfa368.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/80a4fbad5c43dae0080bc8baa5ccef2784edc496/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="e9dc052d4d36b53c3a1bb2d5bf634fcac5d35037">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_0685f31fe57d73ea3e3d4733db44aa9b9187e49a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/4101f23540c72abb4ed0e1f96eaf9e36fc1221ea/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_cc5c40e936f0e7462c3562c914de660c750749d6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/2a127e3f81d56036f477537733c43eeecce73415/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="21fff55a9a49a1e8dadbe3cc0fc56777a085186f">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_fdd7a69eb7b0ce433d347a7caaa10fc07d5c326c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/BounceHigh/Temp/gradleOut/GooglePlayGamesManifest.plugin/build/intermediates/bundles/default/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="f3dfc3ec43a715236e4e6a48a03dfb473701f859">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_bc6f3c3d5bef2967aa755dbb638d202bb023f3d3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/db1b7f92f6ecf0b15c8136922c5d73eeb680589a/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="e7005ffa9078991e5b1bd3943cb649234308e89c">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_021d4aabfa7a461249288fc7b564ac05fdc0645c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/345c7016f922d27f2f97af7a744f39a8d8ff5854/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_77c8946e266b20a47886874c5a15243e2582afd6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/BounceHigh/Temp/gradleOut/libs/com.android.support.support-annotations-25.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/com.android.support.support-annotations-25.2.0_7247f7584f6f34377df2359516455338572adf3d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/f89563da38e9f1cc6232fb5508f64cf002ec0caa/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_432532562dc97c7fc6bbe7500b1bb6b0ca194ac2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/d61dd5c9c3902c334471e240dd9d9f463c5f7eea/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_ceacc60d265c0f7c6b3fbec5cf710a34abdcf103.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/BounceHigh/Temp/gradleOut/libs/unity-classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="2d302418aa3482b8db770278260340aed47dd37a">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/unity-classes_88a46e613815f7a1c3be726a12ff03758857e97d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/54c310d9f68b234eafb025e53a9089427260e9d5/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="0ab379ccbc45dadc6843cf258d9e741075758dd5">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_f2ea2f3e498e04dd1c173ce9c5208b000ae7ceba.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/76e541755887715270a6052894bdba06e1c5a654/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="225f093d9a041f8206d812d3055a886a816ac365">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_b00d26922c05447a1b35dd8c27912c253ad1a33f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/d1779c32d8fe4a26ea30214be081d813ea50be76/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_a996f603911823c2568020ef0f47133cd8301e2b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/06423a554525a7008440add3ab7e01ed34fc3654/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="0ceba9b23d029cde7fb7cea7b8ed5e6bb1611e27">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_d8a9598d5087b1336e99680ce6f21ff740acf16f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/0cc62395ad1e9f0e87466e111d4fbf123c55369f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="fd6ae8c61bd548b134265ef3c37807d4efcc854c">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_1edde93c6296a823afb8df9ea4725306edfdc254.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/e011254cdc3a41529fef5b32e9b9292cebddf6e0/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="2187ba282e1bb00afbaf23f5a4227b5c399e2b21">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_ccad9f64529b26f65dcb82e518bbb243875584e9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/3bf505c7f68cda4a54a40400a31878f73d1f3ef5/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="64adc9f1351d7d04b236dca2e7b980a486bdacb5">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_e0ec358034a6dd410bd59ab15d203729aeef9209.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/39f72f5a23b6c270f0146edbaa204f8802798cc9/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="3810dd933166e9c76b2d192ee18d5699e9701bb4">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_6ee4aec11b2bcb784b854750db59ac301ac209cf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/kangheejun/.android/build-cache/97d88766c4381ed836e1b2a8270ccf3393ca4601/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.3"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/pre-dexed/release/classes_b196a0b3b673d643169a5c640062ef41e8750104.jar" />
+    </item>
+
+</items>
