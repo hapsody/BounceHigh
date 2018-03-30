@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿//using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
 
 public class Sphere : MonoBehaviour {
 
-	[SerializeField]
-	private Sphere _sphere = null;
 	[SerializeField]
 	private Rigidbody _rigidbody = null;
 
@@ -21,9 +19,9 @@ public class Sphere : MonoBehaviour {
 
 	void OnCollisionEnter(Collision target){
 		if (target.transform.tag != "obstacle") {
-			_rigidbody.AddForce (target.transform.up * 1000);
+			_rigidbody.AddForce (target.transform.up * (1000 + 20 * Manager.Instance.Level));
 		} else {
-			_rigidbody.AddForce (target.transform.up * 200);
+			_rigidbody.AddForce (target.transform.up * 300);
 		}
 
 	}

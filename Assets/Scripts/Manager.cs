@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,14 +6,18 @@ using UnityEngine.UI;
 
 public class Manager : MonoBehaviour, IGameObject {
 
+	[SerializeField]
+	private Transform _musicCC = null;
+	[SerializeField]
+	private Text _composeTitle = null;
+	[SerializeField]
+	private Text _musicTitle = null;
 	static private Manager _instance;
 
 	static public Manager Instance { get { return _instance; } set { _instance = value;} }
-	[SerializeField]
-	private GameObject[] _heightNumbers = new GameObject[3];
+
 	private int _height = 0;
 	private int _bestHeight =0;
-	private string _leaderBoardID = "CgkIv4X7_csFEAIQAQ";
 
 	[SerializeField]
 	private GameObject _background = null;
@@ -51,6 +54,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	private Text _scoreTitle;
 
 	private int _level;
+	public int Level { get { return _level; } set { _level = value; } }
 
 
 	[SerializeField]
@@ -63,7 +67,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	private bool _sphereDestroyed = false;
 	[SerializeField]
 	private Transform _pausePanel;
-	private bool _replay = true;
+	private bool _replay = false;
 
 	private int _playCount = 0;
 
@@ -82,17 +86,50 @@ public class Manager : MonoBehaviour, IGameObject {
 	bool _increaseG = true;
 	bool _increaseB = true;
 
+
+
+
 	void Awake() {
+		
+		Screen.SetResolution( 1440, 2560, true );
+
+	
+
 		_instance = this;
 	}
 
 	// Use this for initialization
 	void Start () {
-		GameStart ();
+		
+		Invoke ("OpeningStart", 3);
+
+		MeshFilter meshFilter = this.gameObject.AddComponent<MeshFilter>();
+		meshFilter.mesh = new Mesh ();
+		/*
+		MeshFilter meshFilter = this.gameObject.AddComponent<MeshFilter>();
+		MeshRenderer meshRenderer = this.gameObject.AddComponent<MeshRenderer>();
+		Mesh mesh = new Mesh();
+
+		mesh.vertices = new Vector3[]
+		{
+			new Vector3(0, 0, 1), new Vector3(2, -0.5f, 1), new Vector3(2, 0.5f, 1)
+		};
+
+		//UV 설정
+		mesh.uv = new Vector2[]
+		{
+			new Vector2(0.0f, 1.0f),
+			new Vector2(1.0f, 0.0f),
+			new Vector2(1.0f, 1.0f)
+		};
+
+		//삼각형 그리는 순서 설정
 
 
-
-
+		mesh.triangles = new int[]{2,1,0};
+		mesh.RecalculateNormals();
+		meshFilter.mesh = mesh;
+*/
 	}
 
 	/*
@@ -110,14 +147,17 @@ public class Manager : MonoBehaviour, IGameObject {
 		}
 	}
 */
-
+	public void OpeningStart (){
+		StartCoroutine ("PanelFadeIn", true);
+		GameStart ();
+	}
 
 	IEnumerator ClimbUpCAM()
 	{
 		while (_bplay) {
 			_minHeight += Time.deltaTime * 2 * _level;
 
-			if (_minHeight > _lastCameraPositionY + 5) {
+			if (_minHeight > _lastCameraPositionY + 0) {
 				
 				float cameraX;
 				if (_sphere.transform.position.x > 13.5f)
@@ -134,9 +174,11 @@ public class Manager : MonoBehaviour, IGameObject {
 		}
 	}
 
-	IEnumerator PanelFadeIn()
+	IEnumerator PanelFadeIn(bool isOpening)
 	{
 		_panelAlpha = 1f;
+
+
 		while (true) {
 
 			// just fade out
@@ -144,11 +186,18 @@ public class Manager : MonoBehaviour, IGameObject {
 				_panelAlpha -= Time.deltaTime; 
 			else {
 				_panelAlpha = 0f;
+				if (isOpening)
+					_musicCC.gameObject.SetActive (false);
 				break;
 			}
 
 			Color color = new Color (1, 1, 1, _panelAlpha);
-			_panel.gameObject.GetComponent<Image> ().color = color;
+			if (isOpening) {
+				_composeTitle.gameObject.GetComponent<Text> ().color = color;
+				_musicTitle.gameObject.GetComponent<Text> ().color = color;
+			}
+			else
+				_panel.gameObject.GetComponent<Image> ().color = color;
 			yield return new WaitForSeconds (0.01f);
 		}
 	}
@@ -159,6 +208,8 @@ public class Manager : MonoBehaviour, IGameObject {
 		while (_bplay) {
 			_level++;
 			_levelTitle.text = "LEVEL : "+_level;
+			var gravity = Physics.gravity;
+			Physics.gravity = new Vector3 (0, gravity.y - 2, 0);
 			yield return new WaitForSeconds (15);
 		}
 	}
@@ -177,6 +228,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_minHeight = 4.5f;
 		BlockRemover ();
 		_playCount++;
+		Physics.gravity = new Vector3 (0, -60, 0);
 
 	}
 
@@ -190,6 +242,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_playCount = 0;
 		_bplay = false;
 		_background.GetComponent<SpriteRenderer> ().material.color = new Vector4 (Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), 1f);
+		_replay = true;
 
 	}
 
@@ -210,11 +263,11 @@ public class Manager : MonoBehaviour, IGameObject {
 			_pausePanel.gameObject.SetActive (true);
 
 		if (!_sphereDestroyed && _sphere.transform.position.x < -26) {
-			_particleSystem.transform.position = new Vector3 (-25.5f, _sphere.transform.position.y, -1);
+			_particleSystem.transform.position = new Vector3 (-27f, _sphere.transform.position.y, -1);
 			_particleSystem.Play ();
 			_sphereDestroyed = true;
 		} else if (!_sphereDestroyed &&_sphere.transform.position.x > 26) {
-			_particleSystem2.transform.position = new Vector3 (25.5f, _sphere.transform.position.y, -1);
+			_particleSystem2.transform.position = new Vector3 (27f, _sphere.transform.position.y, -1);
 			_particleSystem2.Play ();
 			_sphereDestroyed = true;
 
@@ -224,14 +277,14 @@ public class Manager : MonoBehaviour, IGameObject {
 	IEnumerator BlockGenerator()
 	{
 		while (_bplay) {
-			_block.transform.position = new Vector3 (Random.Range (-24, 24), _camera.transform.position.y + 30, 0);
+			_block.transform.position = new Vector3 (Random.Range (_camera.transform.position.x - 14f, _camera.transform.position.y + 14f), _camera.transform.position.y + 30, 0);
 			_block.transform.localScale = new Vector3 (0.01f, 1, Random.Range (2f, 3f));
 			//_block.transform.Rotate (new Vector3 (Random.Range (0, 180), 0, 0));
 			_blockList.Add (GameObject.Instantiate (_block));
-			if(_level < 20)
-				yield return new WaitForSeconds (Random.Range (10 - _level, 15 - _level));
+			if(_level < 10)
+				yield return new WaitForSeconds (Random.Range (2 - _level * 0.2f, 5f - _level * 0.2f));
 			else
-				yield return new WaitForSeconds (Random.Range (1, 3));
+				yield return new WaitForSeconds (Random.Range (0.1f, 2.5f));
 		}
 	}
 
@@ -297,7 +350,24 @@ public class Manager : MonoBehaviour, IGameObject {
 		if (_bplay) {
 			AmbientBackgroundEffect ();
 
-			if (_sphere.transform.position.x < -26.2 || _sphere.transform.position.x > 26.2 || _sphere.transform.position.y < _minHeight - 27 )//_lastCameraPositionY - 20)
+
+			MeshFilter meshFilter = this.gameObject.GetComponent<MeshFilter>();
+			MeshRenderer meshRenderer = this.gameObject.AddComponent<MeshRenderer>();
+			Mesh mesh = new Mesh();
+
+			var currentPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			currentPos.z = 1;
+			mesh.vertices = new Vector3[]
+			{
+				currentPos, new Vector3(currentPos.x + 2, currentPos.y-0.5f, 1), new Vector3(currentPos.x + 2, currentPos.y+ 0.5f, 1)
+			};
+
+			//삼각형 그리는 순서 설정
+			mesh.triangles = new int[]{2,1,0};
+			mesh.RecalculateNormals();
+			meshFilter.mesh = mesh;
+
+			if (_sphere.transform.position.x < -28.2 || _sphere.transform.position.x > 28.2 || _sphere.transform.position.y < _minHeight - 27 )//_lastCameraPositionY - 20)
 				GameStop ();
 
 			_height = (int) (_sphere.transform.position.y + 8.2f);
@@ -346,18 +416,18 @@ public class Manager : MonoBehaviour, IGameObject {
 			} else {
 				//_mouseOutPos.z = -10;
 				_lastCameraPositionY = _mouseOutPos.y + 1;
-				if (_minHeight < _lastCameraPositionY + 5) {
-					_minHeight = _lastCameraPositionY + 5;
+				if (_minHeight < _lastCameraPositionY + 0) {
+					_minHeight = _lastCameraPositionY + 0;
 
 				float cameraX;
-				if (_sphere.transform.position.x > 13.5f)
-					cameraX = 13.5f;
-				else if ( _sphere.transform.position.x < -13.5f) 
-					cameraX = -13.5f;
+				if (_sphere.transform.position.x > 14f)
+					cameraX = 14f;
+				else if ( _sphere.transform.position.x < -14f) 
+					cameraX = -14f;
 				else//( _sphere.transform.position.x <= 13.5 && _sphere.transform.position.x >= -13.5)
 					cameraX = _sphere.transform.position.x;
 				
-				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (cameraX, _lastCameraPositionY + 5, -10), Time.deltaTime * 3);
+				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (cameraX, _lastCameraPositionY + 0, -10), Time.deltaTime * 3);
 					
 						
 				}
@@ -380,7 +450,7 @@ public class Manager : MonoBehaviour, IGameObject {
 				}
 				_panel.gameObject.SetActive (true);
 				_title.gameObject.SetActive (false);
-				StartCoroutine ("PanelFadeIn");
+				StartCoroutine ("PanelFadeIn", false);
 
 				GameInit ();
 				_bplay = true;
@@ -404,12 +474,18 @@ public class Manager : MonoBehaviour, IGameObject {
 	}
 
 	public void RankButton(){
-		Debug.Log ("rank");
 		_gpgsManager.SignIn ();
-		_gpgsManager.ReportScore (_bestHeight);
-		_gpgsManager.ShowLeaderboardUI ();
-		
+		//_gpgsManager.ReportScore (_bestHeight);
+		//_gpgsManager.ShowLeaderboardUI ();
 
+		_gpgsManager.SaveToCloud("Score:100, x:10, y:10, z:20");
 	}
+
+	public void GetScoreButton(){
+		//_gpgsManager.GetUsersScore ();
+
+		_gpgsManager.LoadFromCloud (_gpgsManager.HEEJUN);
+	}
+
 
 }

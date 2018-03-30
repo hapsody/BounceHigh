@@ -63,7 +63,7 @@ android {
 	}
 
 	aaptOptions {
-		noCompress '.unity3d', '.ress', '.resource', '.obb','bin/data/sharedassets0.resource'
+		noCompress '.unity3d', '.ress', '.resource', '.obb'
 	}
 
 	signingConfigs { release {

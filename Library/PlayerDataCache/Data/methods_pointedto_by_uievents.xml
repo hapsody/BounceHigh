@@ -1,6 +1,7 @@
 <linker>
 	<assembly fullname="Assembly-CSharp">
 		<type fullname="Manager">
+			<method name="GetScoreButton"/>
 			<method name="RankButton"/>
 			<method name="ReplayButton"/>
 		</type>

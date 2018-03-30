@@ -1,20 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using GooglePlayGames.BasicApi.SavedGame;
 using UnityEngine.SocialPlatforms;
 
 public class GPGSManager : MonoBehaviour
 
 {
 
+
+
 	void Awake()
 	{
-		
-
 		{
 			#if UNITY_ANDROID
 
@@ -32,11 +33,7 @@ public class GPGSManager : MonoBehaviour
 
 			#endif
 		}
-
-
-
 	}
-
 
 
 	public bool SignIn()
@@ -88,6 +85,8 @@ public class GPGSManager : MonoBehaviour
 
 		PlayGamesPlatform.Instance.ReportScore(score, GPGSIds.leaderboard_leader_board /*GPGSIds.leaderboard_score*/, (bool success) =>
 			{
+
+
 				if (success)
 				{
 					Debug.Log("hapsody report success");
@@ -124,6 +123,8 @@ public class GPGSManager : MonoBehaviour
 
 	public void ShowLeaderboardUI()
 	{
+
+
 		// Sign In 이 되어있지 않은 상태라면
 		// Sign In 후 리더보드 UI 표시 요청할 것
 		if (Social.localUser.authenticated == false)
@@ -155,7 +156,195 @@ public class GPGSManager : MonoBehaviour
 
 
 
+	public void GetUsersScore()
+	{
+		
+		PlayGamesPlatform.Instance.LoadScores (
+			GPGSIds.leaderboard_leader_board,
+			LeaderboardStart.PlayerCentered,
+			3,
+			LeaderboardCollection.Public,
+			LeaderboardTimeSpan.AllTime,
+			(LeaderboardScoreData data) => {
+				Debug.Log("LeaderboardScoreData information start");
 
+				Debug.Log ("data.Valid: " + data.Valid);
+				Debug.Log ("data.Id: " + data.Id);
+				Debug.Log ("data.PlayerScore: " + data.PlayerScore);
+				Debug.Log ("data.PlayerScore.userID: " + data.PlayerScore.userID);
+				Debug.Log ("data.PlayerScore.formattedValue: " + data.PlayerScore.formattedValue);
+				Debug.Log ("data.PlayerScore.leaderboardID: " + data.PlayerScore.leaderboardID);
+				Debug.Log ("data.PlayerScore.value: " + data.PlayerScore.value);
+
+				Debug.Log("LeaderboardScoreData information end");
+			});
+
+
+	}
+
+
+
+
+
+	public bool isProcessing
+	{
+		get;
+		private set;
+	}
+	public string loadedData
+	{
+		get;
+		private set;
+	}
+	private const string m_saveFileName = "game_save_data";
+
+	public bool isAuthenticated
+	{
+		get
+		{
+			return Social.localUser.authenticated;
+		}
+	}
+
+
+	private void ProcessCloudData(byte[] cloudData)
+	{
+		if (cloudData == null)
+		{
+			Debug.Log("No Data saved to the cloud");
+			return;
+		}
+
+		string progress = BytesToString(cloudData);
+		loadedData = progress;
+	}
+
+	public void HEEJUN(string abc){
+		Debug.Log ("HEEJUN");
+		Debug.Log ("abc: " + abc);
+	}
+
+
+	public void LoadFromCloud(Action<string> afterLoadAction)
+	{
+		Debug.Log("Load Form Cloud Func Entered");
+		if (isAuthenticated && !isProcessing)
+		{
+			Debug.Log("Load Form Cloud auth success");
+			StartCoroutine(LoadFromCloudRoutin(afterLoadAction));
+		}
+		else
+		{
+			Debug.Log("auth fail isAuthenticated == " + isAuthenticated + " && isProcessing == " + isProcessing);
+			SignIn();
+		}
+	}
+
+	private IEnumerator LoadFromCloudRoutin(Action<string> loadAction)
+	{
+		isProcessing = true;
+		Debug.Log("Loading game progress from the cloud.");
+
+		((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution(
+			m_saveFileName, //name of file.
+			DataSource.ReadCacheOrNetwork,
+			ConflictResolutionStrategy.UseLongestPlaytime,
+			OnFileOpenToLoad);
+
+		while(isProcessing)
+		{
+			yield return null;
+		}
+		Debug.Log ("loadfrom cloud Routine coroutine finished");
+		loadAction.Invoke(loadedData);
+	}
+
+	public void SaveToCloud(string dataToSave)
+	{
+
+		if (isAuthenticated)
+		{
+			Debug.Log("SaveToCloud Authenticated");
+			loadedData = dataToSave;
+			isProcessing = true;
+			((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution(m_saveFileName, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, OnFileOpenToSave);
+		}
+		else
+		{
+			SignIn();
+		}
+	}
+
+	private void OnFileOpenToSave(SavedGameRequestStatus status, ISavedGameMetadata metaData)
+	{
+		if (status == SavedGameRequestStatus.Success)
+		{
+
+			byte[] data = StringToBytes(loadedData);
+
+			SavedGameMetadataUpdate.Builder builder = new SavedGameMetadataUpdate.Builder();
+
+			SavedGameMetadataUpdate updatedMetadata = builder.Build();
+
+			((PlayGamesPlatform)Social.Active).SavedGame.CommitUpdate(metaData, updatedMetadata, data, OnGameSave);
+			Debug.Log ("OnFileOpenToSave Success");
+		}
+		else
+		{
+			Debug.LogWarning("Error opening Saved Game" + status);
+		}
+	}
+
+
+	private void OnFileOpenToLoad(SavedGameRequestStatus status, ISavedGameMetadata metaData)
+	{
+		if (status == SavedGameRequestStatus.Success)
+		{
+			((PlayGamesPlatform)Social.Active).SavedGame.ReadBinaryData(metaData, OnGameLoad);
+			Debug.LogWarning("opening Saved Game Success");
+
+			Debug.Log(metaData.ToString ());
+		}
+		else
+		{
+			Debug.LogWarning("Error opening Saved Game" + status);
+		}
+	}
+
+
+	private void OnGameLoad(SavedGameRequestStatus status, byte[] bytes)
+	{
+		if (status != SavedGameRequestStatus.Success)
+		{
+			Debug.LogWarning("Error Saving" + status);
+		}
+		else
+		{
+			ProcessCloudData(bytes);
+		}
+
+		isProcessing = false;
+	}
+
+	private void OnGameSave(SavedGameRequestStatus status, ISavedGameMetadata metaData)
+	{
+		if (status != SavedGameRequestStatus.Success)
+		{
+			Debug.LogWarning("Error Saving" + status);
+		}
+
+		isProcessing = false;
+	}
+
+	private byte[] StringToBytes(string stringToConvert)
+	{
+		return Encoding.UTF8.GetBytes(stringToConvert);
+	}
+
+	private string BytesToString(byte[] bytes)
+	{
+		return Encoding.UTF8.GetString(bytes);
+	}
 
 
 }
