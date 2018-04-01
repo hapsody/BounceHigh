@@ -22,7 +22,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	[SerializeField]
 	private GameObject _background = null;
 
-	private bool _bplay = true;
+	private bool _bplay = false;
 	public bool BPLAY { get { return _bplay; } set { _bplay = value; } }
 	[SerializeField]
 	private Sphere _sphere = null;
@@ -186,8 +186,12 @@ public class Manager : MonoBehaviour, IGameObject {
 				_panelAlpha -= Time.deltaTime; 
 			else {
 				_panelAlpha = 0f;
-				if (isOpening)
+				if (isOpening) {
 					_musicCC.gameObject.SetActive (false);
+					// if it's opening, sphere move and setting replay to true after fade in & out done.
+					_sphere.SphereResume ();
+					_replay = true;
+				}
 				break;
 			}
 
@@ -236,7 +240,7 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	public void GameStart() {
 		GameInit ();
-		_sphere.SphereResume ();
+
 		Color color = new Color (1, 1, 1, 0);
 		_panel.gameObject.GetComponent<Image> ().color = color;
 		_title.gameObject.SetActive (true);
@@ -244,7 +248,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_playCount = 0;
 		_bplay = false;
 		_background.GetComponent<SpriteRenderer> ().material.color = new Vector4 (Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), 1f);
-		_replay = true;
+
 
 	}
 
@@ -471,7 +475,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	}
 
 	public void ReplayButton(){
-		_replay = true;
+		//_replay = true;
 		_pausePanel.gameObject.SetActive (false);
 	}
 
