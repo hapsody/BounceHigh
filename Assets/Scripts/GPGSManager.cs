@@ -45,13 +45,11 @@ public class GPGSManager : MonoBehaviour
 				if (success)
 				{
 					// to do ...
-					Debug.Log("hapsody success");
 					result = true;
 					// 구글 플레이 게임 서비스 로그인 성공 처리
 				}
 				else
 				{
-					Debug.Log("hapsody failed");
 					result = false;
 					// to do ...
 					// 구글 플레이 게임 서비스 로그인 실패 처리
@@ -89,13 +87,11 @@ public class GPGSManager : MonoBehaviour
 
 				if (success)
 				{
-					Debug.Log("hapsody report success");
 					// Report 성공
 					// 그에 따른 처리
 				}
 				else
 				{
-					Debug.Log("hapsody report failed");
 					// Report 실패
 					// 그에 따른 처리
 				}
@@ -136,6 +132,7 @@ public class GPGSManager : MonoBehaviour
 						// Sign In 성공
 						// 바로 리더보드 UI 표시 요청
 						Social.ShowLeaderboardUI();
+
 						return;
 					}
 					else
@@ -154,7 +151,14 @@ public class GPGSManager : MonoBehaviour
 		#endif
 	}
 
+	public void LoadScoresCallback(IScore[] iscoreVar)
+	{
+		Debug.Log ("LoadScoresCallback");
+		for (int i = 0; i < iscoreVar.Length; i++) {
+			Debug.Log (iscoreVar.GetValue (i).ToString ());
+		}
 
+	}
 
 	public void GetUsersScore()
 	{
@@ -168,17 +172,21 @@ public class GPGSManager : MonoBehaviour
 			(LeaderboardScoreData data) => {
 				Debug.Log("LeaderboardScoreData information start");
 
-				Debug.Log ("data.Valid: " + data.Valid);
-				Debug.Log ("data.Id: " + data.Id);
-				Debug.Log ("data.PlayerScore: " + data.PlayerScore);
-				Debug.Log ("data.PlayerScore.userID: " + data.PlayerScore.userID);
-				Debug.Log ("data.PlayerScore.formattedValue: " + data.PlayerScore.formattedValue);
-				Debug.Log ("data.PlayerScore.leaderboardID: " + data.PlayerScore.leaderboardID);
-				Debug.Log ("data.PlayerScore.value: " + data.PlayerScore.value);
+
+				Debug.Log ("data.Valid: " + data.Valid);  //data.Valid: True
+				Debug.Log ("data.Id: " + data.Id); //data.Id: CgkIv4X7_csFEAIQA
+				Debug.Log ("data.PlayerScore: " + data.PlayerScore); // data.PlayerScore: GooglePlayGames.PlayGamesScore
+				Debug.Log ("data.PlayerScore.userID: " + data.PlayerScore.userID); // data.PlayerScore.userID: g12356694937530055616
+				Debug.Log ("data.PlayerScore.formattedValue: " + data.PlayerScore.formattedValue); // data.PlayerScore.formattedValue: 488
+				Debug.Log ("data.PlayerScore.leaderboardID: " + data.PlayerScore.leaderboardID); // data.PlayerScore.leaderboardID:
+				Debug.Log ("data.PlayerScore.value: " + data.PlayerScore.value); // data.PlayerScore.value: 488
+
 
 				Debug.Log("LeaderboardScoreData information end");
 			});
 
+
+		//Social.LoadScores(GPGSIds.leaderboard_leader_board, LoadScoresCallback);
 
 	}
 
@@ -302,8 +310,6 @@ public class GPGSManager : MonoBehaviour
 		{
 			((PlayGamesPlatform)Social.Active).SavedGame.ReadBinaryData(metaData, OnGameLoad);
 			Debug.LogWarning("opening Saved Game Success");
-
-			Debug.Log(metaData.ToString ());
 		}
 		else
 		{

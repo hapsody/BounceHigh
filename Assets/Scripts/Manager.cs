@@ -155,7 +155,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	IEnumerator ClimbUpCAM()
 	{
 		while (_bplay) {
-			_minHeight += Time.deltaTime * 2 * _level;
+			_minHeight += Time.deltaTime * 0.7f *_level;
 
 			if (_minHeight > _lastCameraPositionY + 0) {
 				
@@ -210,7 +210,9 @@ public class Manager : MonoBehaviour, IGameObject {
 			_levelTitle.text = "LEVEL : "+_level;
 			var gravity = Physics.gravity;
 			Physics.gravity = new Vector3 (0, gravity.y - 2, 0);
-			yield return new WaitForSeconds (15);
+			if (_level >= 10)
+				break;
+			yield return new WaitForSeconds (2);
 		}
 	}
 
@@ -415,9 +417,9 @@ public class Manager : MonoBehaviour, IGameObject {
 
 			} else {
 				//_mouseOutPos.z = -10;
-				_lastCameraPositionY = _mouseOutPos.y + 1;
-				if (_minHeight < _lastCameraPositionY + 0) {
-					_minHeight = _lastCameraPositionY + 0;
+				_lastCameraPositionY = _mouseOutPos.y -5;
+				if (_minHeight < _lastCameraPositionY ) {
+					_minHeight = _lastCameraPositionY;
 
 				float cameraX;
 				if (_sphere.transform.position.x > 14f)
@@ -434,7 +436,7 @@ public class Manager : MonoBehaviour, IGameObject {
 			}
 		} else { // when game is stopped
 			//_mouseOutPos.z = -10;
-			_lastCameraPositionY = _mouseOutPos.y + 1;
+			_lastCameraPositionY = _mouseOutPos.y -5;
 			//_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (0, _lastCameraPositionY+5, -10), Time.deltaTime * 3);
 
 			if (Input.GetMouseButtonUp (0) && _replay) {
@@ -474,17 +476,20 @@ public class Manager : MonoBehaviour, IGameObject {
 	}
 
 	public void RankButton(){
-		_gpgsManager.SignIn ();
+		//_gpgsManager.SignIn ();
 		//_gpgsManager.ReportScore (_bestHeight);
-		//_gpgsManager.ShowLeaderboardUI ();
+		_gpgsManager.ShowLeaderboardUI ();
 
-		_gpgsManager.SaveToCloud("Score:100, x:10, y:10, z:20");
+
+		//_gpgsManager.SaveToCloud("Score:100, x:10, y:10, z:20");
+
 	}
 
 	public void GetScoreButton(){
-		//_gpgsManager.GetUsersScore ();
+		_gpgsManager.GetUsersScore ();
 
-		_gpgsManager.LoadFromCloud (_gpgsManager.HEEJUN);
+
+		//_gpgsManager.LoadFromCloud (_gpgsManager.HEEJUN);
 	}
 
 

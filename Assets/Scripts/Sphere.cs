@@ -13,13 +13,13 @@ public class Sphere : MonoBehaviour {
 	}
 
 	public void SphereResume(){
-		_rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+		_rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX;
 
 	}
 
 	void OnCollisionEnter(Collision target){
 		if (target.transform.tag != "obstacle") {
-			_rigidbody.AddForce (target.transform.up * (1000 + 20 * Manager.Instance.Level));
+			_rigidbody.AddForce (target.transform.up * (1000 + 30 * Manager.Instance.Level));
 		} else {
 			_rigidbody.AddForce (target.transform.up * 300);
 		}

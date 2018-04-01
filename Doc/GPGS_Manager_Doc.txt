@@ -1,0 +1,127 @@
+참조 페이지 : https://www.ijemin.com/blog/%EC%9C%A0%EB%8B%88%ED%8B%B0-%EA%B2%8C%EC%9E%84-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%A5%BC-%EA%B5%AC%EA%B8%80-%ED%94%8C%EB%A0%88%EC%9D%B4-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%97%90-%EC%A0%80%EC%9E%A5/
+
+http://devhw.tistory.com/15
+
+
+1. 구글 서버로의 저장
+구글 서버에 저장시에 아래와 같이 SaveToCloud 함수를 통해 서버에 데이터를 전송하게 된다.
+
+_gpgsManager.SaveToCloud("Score:100, x:10, y:10, z:20");
+위와 같이 스트링형태로 저장하면 아래 함수에서 loadedData 변수에 할당되어 OnFileOpenToSave에서 전송처리된다.
+
+	public void SaveToCloud(string dataToSave)
+	{
+
+		if (isAuthenticated)
+		{
+			Debug.Log("SaveToCloud Authenticated");
+			loadedData = dataToSave;
+			isProcessing = true;
+			((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution(m_saveFileName, DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, OnFileOpenToSave);
+		}
+		else
+		{
+			SignIn();
+		}
+	}
+
+private void OnFileOpenToSave(SavedGameRequestStatus status, ISavedGameMetadata metaData)
+	{
+		if (status == SavedGameRequestStatus.Success)
+		{
+
+			byte[] data = StringToBytes(loadedData);
+
+			SavedGameMetadataUpdate.Builder builder = new SavedGameMetadataUpdate.Builder();
+
+			SavedGameMetadataUpdate updatedMetadata = builder.Build();
+
+			((PlayGamesPlatform)Social.Active).SavedGame.CommitUpdate(metaData, updatedMetadata, data, OnGameSave);
+			Debug.Log ("OnFileOpenToSave Success");
+		}
+		else
+		{
+			Debug.LogWarning("Error opening Saved Game" + status);
+		}
+	}
+
+2. 구글 서버로부터의 로드
+
+아래와 같이 LoadFromCloud 를 콜하여 로드한다. 인자로 주어지는 함수는 action으로 콜백함수 주소를 넣는다( 로드 후 실행될 함수)
+	
+	_gpgsManager.LoadFromCloud (_gpgsManager.HEEJUN);
+
+	public void HEEJUN(string abc){
+		Debug.Log ("HEEJUN");
+		Debug.Log ("abc: " + abc);
+	}
+
+HEEJUN 함수에 주어지는 인자는 아래의 함수에서 전해진다.
+loadAction.Invoke(loadedData); <- loadedData가 HEEJUN 인자로 전해진다.
+
+
+
+	private IEnumerator LoadFromCloudRoutin(Action<string> loadAction)
+	{
+		isProcessing = true;
+		Debug.Log("Loading game progress from the cloud.");
+
+		((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution(
+			m_saveFileName, //name of file.
+			DataSource.ReadCacheOrNetwork,
+			ConflictResolutionStrategy.UseLongestPlaytime,
+			OnFileOpenToLoad);
+
+		while(isProcessing)
+		{
+			yield return null;
+		}
+		Debug.Log ("loadfrom cloud Routine coroutine finished");
+		loadAction.Invoke(loadedData);
+	}
+
+
+그렇다면 loadedData는 어디서 처리된걸까?
+아래 세 함수가 차례로 콜되며 마지막에 string progress가 loadedData란 내부 변수로 저장됨.
+
+
+
+
+	private void OnFileOpenToLoad(SavedGameRequestStatus status, ISavedGameMetadata metaData)
+	{
+		if (status == SavedGameRequestStatus.Success)
+		{
+			((PlayGamesPlatform)Social.Active).SavedGame.ReadBinaryData(metaData, OnGameLoad);
+			Debug.LogWarning("opening Saved Game Success");
+		}
+		else
+		{
+			Debug.LogWarning("Error opening Saved Game" + status);
+		}
+	}
+
+	private void OnGameLoad(SavedGameRequestStatus status, byte[] bytes)
+	{
+		if (status != SavedGameRequestStatus.Success)
+		{
+			Debug.LogWarning("Error Saving" + status);
+		}
+		else
+		{
+			ProcessCloudData(bytes);
+		}
+
+		isProcessing = false;
+	}
+
+	private void ProcessCloudData(byte[] cloudData)
+	{
+		if (cloudData == null)
+		{
+			Debug.Log("No Data saved to the cloud");
+			return;
+		}
+
+		string progress = BytesToString(cloudData);
+		loadedData = progress;
+	}
