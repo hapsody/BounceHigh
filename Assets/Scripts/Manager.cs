@@ -22,6 +22,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	[SerializeField]
 	private GameObject _background = null;
 
+	private bool _replay = false;
 	private bool _bplay = false;
 	public bool BPLAY { get { return _bplay; } set { _bplay = value; } }
 	[SerializeField]
@@ -67,7 +68,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	private bool _sphereDestroyed = false;
 	[SerializeField]
 	private Transform _pausePanel;
-	private bool _replay = false;
+
 
 	private int _playCount = 0;
 
@@ -100,53 +101,10 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	// Use this for initialization
 	void Start () {
-		
+		InitMeshFilter ();
 		Invoke ("OpeningStart", 3);
-
-		MeshFilter meshFilter = this.gameObject.AddComponent<MeshFilter>();
-		meshFilter.mesh = new Mesh ();
-		/*
-		MeshFilter meshFilter = this.gameObject.AddComponent<MeshFilter>();
-		MeshRenderer meshRenderer = this.gameObject.AddComponent<MeshRenderer>();
-		Mesh mesh = new Mesh();
-
-		mesh.vertices = new Vector3[]
-		{
-			new Vector3(0, 0, 1), new Vector3(2, -0.5f, 1), new Vector3(2, 0.5f, 1)
-		};
-
-		//UV 설정
-		mesh.uv = new Vector2[]
-		{
-			new Vector2(0.0f, 1.0f),
-			new Vector2(1.0f, 0.0f),
-			new Vector2(1.0f, 1.0f)
-		};
-
-		//삼각형 그리는 순서 설정
-
-
-		mesh.triangles = new int[]{2,1,0};
-		mesh.RecalculateNormals();
-		meshFilter.mesh = mesh;
-*/
 	}
-
-	/*
-	IEnumerator GrowthTree(){
-		while (true) {
-			//var scale = _tree.transform.localScale;
-			//scale = new Vector3 (scale.x + Time.deltaTime * 0.001f, scale.y + Time.deltaTime * 0.001f, 0.1f);
-			//_tree.transform.localScale = scale;
-			var treeData = _tree.data as TreeEditor.TreeData;
-			if (treeData != null) {
-				var branchGroups = treeData.branchGroups;
-				Debug.Log ("branchlength"+branchGroups.Length);
-			}
-			yield return new WaitForSeconds (0.02f);
-		}
-	}
-*/
+		
 	public void OpeningStart (){
 		StartCoroutine ("PanelFadeIn", true);
 		GameStart ();
@@ -155,7 +113,7 @@ public class Manager : MonoBehaviour, IGameObject {
 	IEnumerator ClimbUpCAM()
 	{
 		while (_bplay) {
-			_minHeight += Time.deltaTime * 0.7f *_level;
+			_minHeight += Time.deltaTime * 0.5f *_level;
 
 			if (_minHeight > _lastCameraPositionY + 0) {
 				
@@ -214,9 +172,9 @@ public class Manager : MonoBehaviour, IGameObject {
 			_levelTitle.text = "LEVEL : "+_level;
 			var gravity = Physics.gravity;
 			Physics.gravity = new Vector3 (0, gravity.y - 2, 0);
-			if (_level >= 10)
+			if (_level >= 20)
 				break;
-			yield return new WaitForSeconds (2);
+			yield return new WaitForSeconds (10);
 		}
 	}
 
@@ -248,7 +206,7 @@ public class Manager : MonoBehaviour, IGameObject {
 		_playCount = 0;
 		_bplay = false;
 		_background.GetComponent<SpriteRenderer> ().material.color = new Vector4 (Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), Random.Range (0.2f, 0.8f), 1f);
-
+		_gpgsManager.SignIn ();
 
 	}
 
@@ -263,7 +221,10 @@ public class Manager : MonoBehaviour, IGameObject {
 		if (temp < _bestHeight) {
 			PlayerPrefs.SetInt ("_bestScore", _bestHeight);
 			PlayerPrefs.Save ();
+			_gpgsManager.ReportScore (_bestHeight);
 		}
+
+
 
 		if (_pausePanel.gameObject.activeSelf == false)			
 			_pausePanel.gameObject.SetActive (true);
@@ -285,12 +246,11 @@ public class Manager : MonoBehaviour, IGameObject {
 		while (_bplay) {
 			_block.transform.position = new Vector3 (Random.Range (_camera.transform.position.x - 14f, _camera.transform.position.y + 14f), _camera.transform.position.y + 30, 0);
 			_block.transform.localScale = new Vector3 (0.01f, 1, Random.Range (2f, 3f));
-			//_block.transform.Rotate (new Vector3 (Random.Range (0, 180), 0, 0));
 			_blockList.Add (GameObject.Instantiate (_block));
-			if(_level < 10)
-				yield return new WaitForSeconds (Random.Range (2 - _level * 0.2f, 5f - _level * 0.2f));
+			if(_level < 20)
+				yield return new WaitForSeconds (Random.Range (4 - _level * 0.2f, 5f - _level * 0.2f));
 			else
-				yield return new WaitForSeconds (Random.Range (0.1f, 2.5f));
+				yield return new WaitForSeconds (Random.Range (0.1f,0.5f));
 		}
 	}
 
@@ -351,35 +311,45 @@ public class Manager : MonoBehaviour, IGameObject {
 
 	}
 
+	public void InitMeshFilter()
+	{
+		MeshFilter meshFilter = this.gameObject.AddComponent<MeshFilter>();
+		meshFilter.mesh = new Mesh ();
+	}
+
+	public void DrawTriangle(Vector3 pos)
+	{
+		MeshFilter meshFilter = this.gameObject.GetComponent<MeshFilter>();
+		MeshRenderer meshRenderer = this.gameObject.AddComponent<MeshRenderer>();
+		Mesh mesh = new Mesh();
+
+		//var currentPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+		pos.z = 1;
+		mesh.vertices = new Vector3[]
+		{
+			pos, new Vector3(pos.x + 2, pos.y-0.5f, 1), new Vector3(pos.x + 2, pos.y+ 0.5f, 1)
+		};
+
+		//삼각형 그리는 순서 설정
+		mesh.triangles = new int[]{2,1,0};
+		mesh.RecalculateNormals();
+		meshFilter.mesh = mesh;
+	}
+
 	public void GameUpdate()
 	{
 		if (_bplay) {
 			AmbientBackgroundEffect ();
 
-
-			MeshFilter meshFilter = this.gameObject.GetComponent<MeshFilter>();
-			MeshRenderer meshRenderer = this.gameObject.AddComponent<MeshRenderer>();
-			Mesh mesh = new Mesh();
-
-			var currentPos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
-			currentPos.z = 1;
-			mesh.vertices = new Vector3[]
-			{
-				currentPos, new Vector3(currentPos.x + 2, currentPos.y-0.5f, 1), new Vector3(currentPos.x + 2, currentPos.y+ 0.5f, 1)
-			};
-
-			//삼각형 그리는 순서 설정
-			mesh.triangles = new int[]{2,1,0};
-			mesh.RecalculateNormals();
-			meshFilter.mesh = mesh;
-
-			if (_sphere.transform.position.x < -28.2 || _sphere.transform.position.x > 28.2 || _sphere.transform.position.y < _minHeight - 27 )//_lastCameraPositionY - 20)
+			if (_sphere.transform.position.x < -28.2 || _sphere.transform.position.x > 28.2 || _sphere.transform.position.y < _minHeight - 27) {//_lastCameraPositionY - 20)
 				GameStop ();
 
-			_height = (int) (_sphere.transform.position.y + 8.2f);
-			if (_height > _bestHeight ) {
+			}
+
+			_height = (int)(_sphere.transform.position.y + 8.2f);
+			if (_height > _bestHeight) {
 				_bestHeight = _height;
-				_scoreTitle.text = _bestHeight.ToString() + "m";
+				_scoreTitle.text = _bestHeight.ToString () + "m";
 			}
 
 
@@ -421,19 +391,19 @@ public class Manager : MonoBehaviour, IGameObject {
 
 			} else {
 				//_mouseOutPos.z = -10;
-				_lastCameraPositionY = _mouseOutPos.y -5;
-				if (_minHeight < _lastCameraPositionY ) {
+				_lastCameraPositionY = _mouseOutPos.y - 5;
+				if (_minHeight < _lastCameraPositionY) {
 					_minHeight = _lastCameraPositionY;
 
-				float cameraX;
-				if (_sphere.transform.position.x > 14f)
-					cameraX = 14f;
-				else if ( _sphere.transform.position.x < -14f) 
-					cameraX = -14f;
-				else//( _sphere.transform.position.x <= 13.5 && _sphere.transform.position.x >= -13.5)
+					float cameraX;
+					if (_sphere.transform.position.x > 14f)
+						cameraX = 14f;
+					else if (_sphere.transform.position.x < -14f)
+						cameraX = -14f;
+					else//( _sphere.transform.position.x <= 13.5 && _sphere.transform.position.x >= -13.5)
 					cameraX = _sphere.transform.position.x;
 				
-				_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (cameraX, _lastCameraPositionY + 0, -10), Time.deltaTime * 3);
+					_camera.transform.localPosition = Vector3.Slerp (_camera.transform.localPosition, new Vector3 (cameraX, _lastCameraPositionY + 0, -10), Time.deltaTime * 3);
 					
 						
 				}
@@ -475,8 +445,9 @@ public class Manager : MonoBehaviour, IGameObject {
 	}
 
 	public void ReplayButton(){
-		//_replay = true;
+		_replay = true;
 		_pausePanel.gameObject.SetActive (false);
+
 	}
 
 	public void RankButton(){

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/res/merged/release/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/res/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/res/merged/release/color/common_google_signin_btn_tint.xml",
+        "source": "/Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/res/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "/Users/kangheejun/BounceHigh/Temp/gradleOut/build/intermediates/res/merged/release/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/res/color/common_google_signin_btn_text_light.xml"
+    }
+]

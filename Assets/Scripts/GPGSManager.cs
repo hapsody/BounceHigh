@@ -87,11 +87,13 @@ public class GPGSManager : MonoBehaviour
 
 				if (success)
 				{
+					Debug.Log("ReportScore success");
 					// Report 성공
 					// 그에 따른 처리
 				}
 				else
 				{
+					Debug.Log("ReportScore fail");
 					// Report 실패
 					// 그에 따른 처리
 				}
@@ -131,12 +133,14 @@ public class GPGSManager : MonoBehaviour
 					{
 						// Sign In 성공
 						// 바로 리더보드 UI 표시 요청
+						Debug.Log("ShowLeaderboardUI success");
 						Social.ShowLeaderboardUI();
 
 						return;
 					}
 					else
 					{
+						Debug.Log("ShowLeaderboardUI fail");
 						// Sign In 실패 
 						// 그에 따른 처리
 						return;

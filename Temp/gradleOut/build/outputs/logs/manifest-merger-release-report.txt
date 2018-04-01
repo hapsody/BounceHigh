@@ -1,0 +1,284 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:2:1-29:12
+	package
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:2:121-157
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:2:94-120
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+	android:versionCode
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:2:70-93
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:2:11-69
+	android:installLocation
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:2:158-198
+supports-screens
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:3:3-163
+	android:largeScreens
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:3:47-74
+	android:smallScreens
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:3:104-131
+	android:normalScreens
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:3:75-103
+	android:xlargeScreens
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:3:132-160
+	android:anyDensity
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:3:21-46
+application
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:4:3-22:17
+MERGED from [:com.android.support.support-compat-25.2.0:] /Users/kangheejun/.android/build-cache/9d9251bedd796f14ba3b27b6a79353579b2246a2/output/AndroidManifest.xml:25:5-20
+MERGED from [:com.android.support.support-core-ui-25.2.0:] /Users/kangheejun/.android/build-cache/bcff18a9a984c7cfd6084415395aac8701a2fbb3/output/AndroidManifest.xml:25:5-20
+MERGED from [:com.android.support.support-core-utils-25.2.0:] /Users/kangheejun/.android/build-cache/d5fd1dc5b6aee245ab64acbfed573f333ac2d454/output/AndroidManifest.xml:25:5-20
+MERGED from [:com.android.support.support-fragment-25.2.0:] /Users/kangheejun/.android/build-cache/1e8a744c25260bf521bd6db3a7bf1c11c0384c21/output/AndroidManifest.xml:25:5-20
+MERGED from [:com.android.support.support-media-compat-25.2.0:] /Users/kangheejun/.android/build-cache/03df6c50bb20f51269267e9f9da755d1c88fee59/output/AndroidManifest.xml:25:5-20
+MERGED from [:com.android.support.support-v4-25.2.0:] /Users/kangheejun/.android/build-cache/59eaa224747059ca303a3684fe70815bf5b62edb/output/AndroidManifest.xml:25:5-20
+MERGED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:19:5-25:19
+MERGED from [:com.google.android.gms.play-services-auth-api-phone-license-11.6.2:] /Users/kangheejun/.android/build-cache/5fe1aad3bb6ec5e59aa2ed760d1760f3bbf7e7f6/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.android.gms.play-services-auth-base-license-11.6.2:] /Users/kangheejun/.android/build-cache/f136baf1e01ce9436eebd63651e4b6f011acbee9/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.android.gms.play-services-base-11.6.2:] /Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/AndroidManifest.xml:18:5-20:19
+MERGED from [:com.google.android.gms.play-services-base-license-11.6.2:] /Users/kangheejun/.android/build-cache/e72b2e1f1c3a238883d8ee54a2c063e7697034f4/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.android.gms.play-services-basement-11.6.2:] /Users/kangheejun/.android/build-cache/55c71f90358b13a43b29e5bcebbd301225d8da5b/output/AndroidManifest.xml:19:5-21:19
+MERGED from [:com.google.android.gms.play-services-basement-license-11.6.2:] /Users/kangheejun/.android/build-cache/b954efc546e9666efb3eec331e10c8851f74a2c7/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.android.gms.play-services-drive-11.6.2:] /Users/kangheejun/.android/build-cache/155275d8ede781709c9098e664e160a232628911/output/AndroidManifest.xml:18:5-19
+MERGED from [:com.google.android.gms.play-services-drive-license-11.6.2:] /Users/kangheejun/.android/build-cache/dbe9d01c7889df524a977d5bd76883623f66f699/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.android.gms.play-services-games-11.6.2:] /Users/kangheejun/.android/build-cache/4a261da8bcc2ee386da271c85dd2658797b8b7fb/output/AndroidManifest.xml:18:5-19
+MERGED from [:com.google.android.gms.play-services-games-license-11.6.2:] /Users/kangheejun/.android/build-cache/5aca34d4cf433af7c9425b9304fb4a9d90d7b6b0/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.android.gms.play-services-nearby-11.6.2:] /Users/kangheejun/.android/build-cache/c092aa7a0a4f1ccdd4bcc34d09bfc1cca80aa62e/output/AndroidManifest.xml:5:5-19
+MERGED from [:com.google.android.gms.play-services-nearby-license-11.6.2:] /Users/kangheejun/.android/build-cache/d47f5f217fa9bf346eae84a55640ca0e227c01e1/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.android.gms.play-services-tasks-11.6.2:] /Users/kangheejun/.android/build-cache/ec600a0e7cfd1936674945d661629004c104fc8b/output/AndroidManifest.xml:4:5-19
+MERGED from [:com.google.android.gms.play-services-tasks-license-11.6.2:] /Users/kangheejun/.android/build-cache/4a63c91a69eb08c7835518b27110c03ababfc429/output/AndroidManifest.xml:5:5-20
+MERGED from [:com.google.games.gpgs-plugin-support-0.9.50:] /Users/kangheejun/.android/build-cache/f763f1dc92aea738e2f693b399ba03b0f98be7bc/output/AndroidManifest.xml:9:5-20
+MERGED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:14:5-35:19
+MERGED from [gradleOut:GooglePlayGamesManifest.plugin:unspecified] /Users/kangheejun/BounceHigh/Temp/gradleOut/GooglePlayGamesManifest.plugin/build/intermediates/bundles/default/AndroidManifest.xml:15:5-30:19
+	android:label
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:4:50-82
+	android:icon
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:4:16-49
+	android:banner
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:4:147-184
+	android:theme
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:4:83-124
+	android:isGame
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:4:125-146
+activity#com.unity3d.player.UnityPlayerActivity
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:5-12:16
+	android:screenOrientation
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:102-144
+	android:label
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:15-47
+	android:launchMode
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:145-176
+	android:configChanges
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:177-358
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:5:48-101
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER+android.intent.category.LEANBACK_LAUNCHER
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:6:7-10:23
+action#android.intent.action.MAIN
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:7:9-61
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:7:17-58
+category#android.intent.category.LAUNCHER
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:8:9-69
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:8:19-66
+category#android.intent.category.LEANBACK_LAUNCHER
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:9:9-78
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:9:19-75
+meta-data#unityplayer.UnityActivity
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:11:7-82
+	android:value
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:11:59-79
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:11:18-58
+activity#com.google.games.bridge.NativeBridgeActivity
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:13:5-148
+MERGED from [gradleOut:GooglePlayGamesManifest.plugin:unspecified] /Users/kangheejun/BounceHigh/Temp/gradleOut/GooglePlayGamesManifest.plugin/build/intermediates/bundles/default/AndroidManifest.xml:27:9-29:86
+	android:theme
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:13:75-145
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:13:15-74
+meta-data#com.google.android.gms.games.APP_ID
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:15:5-100
+MERGED from [gradleOut:GooglePlayGamesManifest.plugin:unspecified] /Users/kangheejun/BounceHigh/Temp/gradleOut/GooglePlayGamesManifest.plugin/build/intermediates/bundles/default/AndroidManifest.xml:18:9-20:46
+	android:value
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:15:67-97
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:15:16-66
+meta-data#com.google.android.gms.games.unityVersion
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:17:5-100
+MERGED from [gradleOut:GooglePlayGamesManifest.plugin:unspecified] /Users/kangheejun/BounceHigh/Temp/gradleOut/GooglePlayGamesManifest.plugin/build/intermediates/bundles/default/AndroidManifest.xml:23:9-25:40
+	android:value
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:17:73-97
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:17:16-72
+meta-data#unity.build-id
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:18:5-101
+	android:value
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:18:46-98
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:18:16-45
+meta-data#unity.splash-mode
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:19:5-69
+	android:value
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:19:49-66
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:19:16-48
+meta-data#unity.splash-enable
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:20:5-74
+	android:value
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:20:51-71
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:20:16-50
+meta-data#android.max_aspect
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:21:5-72
+	android:value
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:21:50-69
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:21:16-49
+uses-sdk
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:23:3-72
+MERGED from [:com.android.support.support-compat-25.2.0:] /Users/kangheejun/.android/build-cache/9d9251bedd796f14ba3b27b6a79353579b2246a2/output/AndroidManifest.xml:21:5-23:58
+MERGED from [:com.android.support.support-core-ui-25.2.0:] /Users/kangheejun/.android/build-cache/bcff18a9a984c7cfd6084415395aac8701a2fbb3/output/AndroidManifest.xml:21:5-23:58
+MERGED from [:com.android.support.support-core-utils-25.2.0:] /Users/kangheejun/.android/build-cache/d5fd1dc5b6aee245ab64acbfed573f333ac2d454/output/AndroidManifest.xml:21:5-23:61
+MERGED from [:com.android.support.support-fragment-25.2.0:] /Users/kangheejun/.android/build-cache/1e8a744c25260bf521bd6db3a7bf1c11c0384c21/output/AndroidManifest.xml:21:5-23:60
+MERGED from [:com.android.support.support-media-compat-25.2.0:] /Users/kangheejun/.android/build-cache/03df6c50bb20f51269267e9f9da755d1c88fee59/output/AndroidManifest.xml:21:5-23:63
+MERGED from [:com.android.support.support-v4-25.2.0:] /Users/kangheejun/.android/build-cache/59eaa224747059ca303a3684fe70815bf5b62edb/output/AndroidManifest.xml:21:5-23:54
+MERGED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:17:5-43
+MERGED from [:com.google.android.gms.play-services-auth-api-phone-11.6.2:] /Users/kangheejun/.android/build-cache/0d5711e80616085f38b4e5d4e86f9975ed049bdd/output/AndroidManifest.xml:3:3-41
+MERGED from [:com.google.android.gms.play-services-auth-api-phone-license-11.6.2:] /Users/kangheejun/.android/build-cache/5fe1aad3bb6ec5e59aa2ed760d1760f3bbf7e7f6/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-auth-base-11.6.2:] /Users/kangheejun/.android/build-cache/3eae805f14765abc40efaff3088c75ed0633a4c3/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-auth-base-license-11.6.2:] /Users/kangheejun/.android/build-cache/f136baf1e01ce9436eebd63651e4b6f011acbee9/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-base-11.6.2:] /Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/AndroidManifest.xml:17:5-43
+MERGED from [:com.google.android.gms.play-services-base-license-11.6.2:] /Users/kangheejun/.android/build-cache/e72b2e1f1c3a238883d8ee54a2c063e7697034f4/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-basement-11.6.2:] /Users/kangheejun/.android/build-cache/55c71f90358b13a43b29e5bcebbd301225d8da5b/output/AndroidManifest.xml:17:5-43
+MERGED from [:com.google.android.gms.play-services-basement-license-11.6.2:] /Users/kangheejun/.android/build-cache/b954efc546e9666efb3eec331e10c8851f74a2c7/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-drive-11.6.2:] /Users/kangheejun/.android/build-cache/155275d8ede781709c9098e664e160a232628911/output/AndroidManifest.xml:17:5-43
+MERGED from [:com.google.android.gms.play-services-drive-license-11.6.2:] /Users/kangheejun/.android/build-cache/dbe9d01c7889df524a977d5bd76883623f66f699/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-games-11.6.2:] /Users/kangheejun/.android/build-cache/4a261da8bcc2ee386da271c85dd2658797b8b7fb/output/AndroidManifest.xml:17:5-43
+MERGED from [:com.google.android.gms.play-services-games-license-11.6.2:] /Users/kangheejun/.android/build-cache/5aca34d4cf433af7c9425b9304fb4a9d90d7b6b0/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-nearby-11.6.2:] /Users/kangheejun/.android/build-cache/c092aa7a0a4f1ccdd4bcc34d09bfc1cca80aa62e/output/AndroidManifest.xml:3:5-43
+MERGED from [:com.google.android.gms.play-services-nearby-license-11.6.2:] /Users/kangheejun/.android/build-cache/d47f5f217fa9bf346eae84a55640ca0e227c01e1/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.android.gms.play-services-tasks-11.6.2:] /Users/kangheejun/.android/build-cache/ec600a0e7cfd1936674945d661629004c104fc8b/output/AndroidManifest.xml:3:5-43
+MERGED from [:com.google.android.gms.play-services-tasks-license-11.6.2:] /Users/kangheejun/.android/build-cache/4a63c91a69eb08c7835518b27110c03ababfc429/output/AndroidManifest.xml:4:5-43
+MERGED from [:com.google.games.gpgs-plugin-support-0.9.50:] /Users/kangheejun/.android/build-cache/f763f1dc92aea738e2f693b399ba03b0f98be7bc/output/AndroidManifest.xml:7:5-44
+MERGED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:7:5-9:41
+MERGED from [gradleOut:GooglePlayGamesManifest.plugin:unspecified] /Users/kangheejun/BounceHigh/Temp/gradleOut/GooglePlayGamesManifest.plugin/build/intermediates/bundles/default/AndroidManifest.xml:11:5-13:41
+	tools:overrideLibrary
+		ADDED from [:com.android.support.support-compat-25.2.0:] /Users/kangheejun/.android/build-cache/9d9251bedd796f14ba3b27b6a79353579b2246a2/output/AndroidManifest.xml:23:9-55
+	android:targetSdkVersion
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:23:40-69
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+		INJECTED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:23:13-39
+uses-feature#0x00020000
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:24:3-52
+	android:glEsVersion
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:24:17-49
+uses-permission#android.permission.INTERNET
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:25:3-65
+MERGED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:12:5-67
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:25:20-62
+uses-feature#android.hardware.touchscreen
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:26:3-88
+	android:required
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:26:61-85
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:26:17-60
+uses-feature#android.hardware.touchscreen.multitouch
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:27:3-99
+	android:required
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:27:72-96
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:27:17-71
+uses-feature#android.hardware.touchscreen.multitouch.distinct
+ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:28:3-108
+	android:required
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:28:81-105
+	android:name
+		ADDED from /Users/kangheejun/BounceHigh/Temp/gradleOut/src/main/AndroidManifest.xml:28:17-80
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:20:9-189
+	android:excludeFromRecents
+		ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:20:129-162
+	android:exported
+		ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:20:163-187
+	android:theme
+		ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:20:69-128
+	android:name
+		ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:20:19-68
+service#com.google.android.gms.auth.api.signin.RevocationBoundService
+ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:24:9-184
+	android:exported
+		ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:24:64-87
+	android:permission
+		ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:24:88-182
+	android:name
+		ADDED from [:com.google.android.gms.play-services-auth-11.6.2:] /Users/kangheejun/.android/build-cache/35c7ac04ea057546c78dd1bb247291625a562f20/output/AndroidManifest.xml:24:18-63
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [:com.google.android.gms.play-services-base-11.6.2:] /Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/AndroidManifest.xml:19:9-172
+	android:exported
+		ADDED from [:com.google.android.gms.play-services-base-11.6.2:] /Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/AndroidManifest.xml:19:146-170
+	android:theme
+		ADDED from [:com.google.android.gms.play-services-base-11.6.2:] /Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/AndroidManifest.xml:19:86-145
+	android:name
+		ADDED from [:com.google.android.gms.play-services-base-11.6.2:] /Users/kangheejun/.android/build-cache/75a4f83a9a621ede89285395de00195e3386e0fa/output/AndroidManifest.xml:19:19-85
+meta-data#com.google.android.gms.version
+ADDED from [:com.google.android.gms.play-services-basement-11.6.2:] /Users/kangheejun/.android/build-cache/55c71f90358b13a43b29e5bcebbd301225d8da5b/output/AndroidManifest.xml:20:9-121
+	android:value
+		ADDED from [:com.google.android.gms.play-services-basement-11.6.2:] /Users/kangheejun/.android/build-cache/55c71f90358b13a43b29e5bcebbd301225d8da5b/output/AndroidManifest.xml:20:66-119
+	android:name
+		ADDED from [:com.google.android.gms.play-services-basement-11.6.2:] /Users/kangheejun/.android/build-cache/55c71f90358b13a43b29e5bcebbd301225d8da5b/output/AndroidManifest.xml:20:20-65
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:com.google.android.gms.play-services-nearby-11.6.2:] /Users/kangheejun/.android/build-cache/c092aa7a0a4f1ccdd4bcc34d09bfc1cca80aa62e/output/AndroidManifest.xml:4:5-78
+MERGED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:11:5-79
+	android:name
+		ADDED from [:com.google.android.gms.play-services-nearby-11.6.2:] /Users/kangheejun/.android/build-cache/c092aa7a0a4f1ccdd4bcc34d09bfc1cca80aa62e/output/AndroidManifest.xml:4:22-76
+activity#com.unity3d.ads.adunit.AdUnitActivity
+ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:15:9-19:74
+	android:hardwareAccelerated
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:18:13-47
+	android:configChanges
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:17:13-170
+	android:theme
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:19:13-71
+	android:name
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:16:13-65
+activity#com.unity3d.ads.adunit.AdUnitTransparentActivity
+ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:20:9-24:86
+	android:hardwareAccelerated
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:23:13-47
+	android:configChanges
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:22:13-170
+	android:theme
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:24:13-83
+	android:name
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:21:13-76
+activity#com.unity3d.ads.adunit.AdUnitTransparentSoftwareActivity
+ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:25:9-29:86
+	android:hardwareAccelerated
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:28:13-48
+	android:configChanges
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:27:13-170
+	android:theme
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:29:13-83
+	android:name
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:26:13-84
+activity#com.unity3d.ads.adunit.AdUnitSoftwareActivity
+ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:30:9-34:74
+	android:hardwareAccelerated
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:33:13-48
+	android:configChanges
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:32:13-170
+	android:theme
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:34:13-71
+	android:name
+		ADDED from [:unity-ads:] /Users/kangheejun/.android/build-cache/fff3cf835de51e215b8efb2989d0abea1d4631f3/output/AndroidManifest.xml:31:13-73
